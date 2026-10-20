@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peta Ekonomi Indonesia</title>
+<meta name="description" content="Peta isometrik 38 provinsi menurut PDRB 2025 dan diorama 17 lapangan usaha per provinsi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%226%22 width=%2212%22 height=%228%22 rx=%222%22 fill=%22%23C2441F%22/%3E%3Crect x=%225%22 y=%222%22 width=%226%22 height=%2212%22 rx=%222%22 fill=%22%23E4572E%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div id="panggung" class="memuat">
+  <canvas id="kanvas" aria-hidden="true"></canvas>
+  <div id="label" aria-hidden="true"></div>
+
+  <!-- BERANDA -->
+  <section id="peta" class="lapisan">
+    <div class="judul">
+      <span class="pill">PDRB 2025 · angka sangat sementara</span>
+      <h1>Peta Ekonomi<br>Indonesia</h1>
+      <p class="sub">Tinggi tiap provinsi menunjukkan PDRB-nya (Produk Domestik Regional Bruto, data BPS): makin tinggi, makin besar ekonominya. Arahkan kursor untuk melihat besar dan lajunya, klik untuk melihat sektor-sektornya.</p>
+    </div>
+    <div class="kartu info-nas">
+      <div><span class="kecil">Tahun · harga</span><b>2025 · harga konstan 2010</b></div>
+      <i class="garis-v"></i>
+      <div><span class="kecil">Pertumbuhan riil nasional (PDB)</span><b><span id="nas-teks"></span> <span class="kecil">vs 2024</span></b></div>
+    </div>
+    <div class="kartu top5">
+      <div class="kepala"><h2>Top 5 provinsi</h2><span class="kecil">PDRB · tumbuh riil</span></div>
+      <div id="top5"></div>
+    </div>
+    <div class="kartu terpilih" id="terpilih"></div>
+    <p class="sumber">Sumber: BPS, PDRB provinsi dan PDB nasional, harga konstan 2010. Pertumbuhan riil = 2025 dibanding 2024 (angka sementara dan sangat sementara). Tinggi pulau sebanding PDRB.</p>
+  </section>
+
+  <!-- DIORAMA -->
+  <section id="dio" class="lapisan" hidden>
+    <div class="ui kiri-atas">
+      <button class="kembali" id="tbl-peta" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Peta</button>
+      <span class="pill">Diorama · 2025 · harga konstan 2010</span>
+      <h1 id="dio-nama"></h1>
+      <div class="chips" id="dio-chips"></div>
+    </div>
+    <div class="ui tengah-atas">
+      <div class="lensa" id="lensa" role="tablist" aria-label="Lensa"></div>
+      <p class="jelas" id="jelas"></p>
+      <div class="legenda" id="legenda"></div>
+    </div>
+    <div class="kartu ui sektor-kartu" id="sektor-kartu"></div>
+    <div class="kartu ui daftar">
+      <div class="kepala"><h2>Sektor PDRB</h2><span class="kecil" id="kolom"></span></div>
+      <div id="daftar"></div>
+      <p class="kecil catatan" id="catatan"></p>
+    </div>
+  </section>
+
+  <div id="balon" class="balon" hidden></div>
+  <p id="pesan" class="kecil pesan">Memuat data…</p>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>
