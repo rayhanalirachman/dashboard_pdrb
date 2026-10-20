@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Diorama Jawa Timur — opsi animasi sektor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+.akar{--bg:#FCFCFB;--kartu:#F4F3F1;--ink:#1F1F1F;--redam:#5A5A5A;--bata:#C2441F;--tint:#FBE9E2}
+.akar *{box-sizing:border-box}
+.akar h1,.akar h2,.akar p{margin:0}
+.kartu{background:var(--kartu);border-radius:24px}
+.pill{display:inline-flex;align-items:center;background:var(--tint);border-radius:999px;padding:5px 14px;font:800 13px 'Nunito',sans-serif;color:var(--ink);align-self:flex-start}
+.kecil{font:700 12.5px 'Nunito',sans-serif;color:var(--redam)}
+a.kembali{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px 0 12px;border-radius:999px;background:var(--kartu);color:var(--ink);font:800 14px 'Nunito',sans-serif;text-decoration:none;align-self:flex-start}
+a.kembali:hover{background:var(--tint)}
+.opsi{display:flex;background:var(--kartu);border-radius:999px;padding:3px;gap:2px}
+.opsi button{height:44px;padding:0 14px;border:0;border-radius:999px;background:none;color:var(--ink);font:800 13.5px 'Nunito',sans-serif;cursor:pointer;white-space:nowrap}
+.opsi button:hover{background:#ECEBE8}
+.opsi button.on{background:var(--ink);color:#fff}
+button.ulang{height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--bata);color:#fff;font:800 13.5px 'Nunito',sans-serif;cursor:pointer}
+button.ulang:hover{background:#A53A1A}
+.baris{display:grid;grid-template-columns:30px 1fr auto;column-gap:8px;align-items:center;width:100%;min-height:36px;background:none;border:0;border-radius:12px;padding:2px 8px;font:700 13.5px 'Nunito',sans-serif;color:var(--ink);text-align:left;cursor:pointer}
+.baris:hover{background:#ECEBE8}
+.baris.on{background:var(--tint)}
+.turun{color:var(--bata)}
+.obj{cursor:pointer;transition:opacity .3s}
+.redup{opacity:.22}
+.pulau{animation:apung 6s ease-in-out infinite}
+@keyframes apung{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.sorot,.cn{--atap:#E4572E;--atap2:#C2441F;--aksen:#E4572E;--aksen2:#F2A48A;--daun:#EE8A6B;--daun2:#C2441F;--tanah:#F2B9A5;--tanah2:#E08A6C}
+/* semua gerak hanya transform/opacity pada <g> pembungkus, transform-box per objek */
+.gerak{transform-box:fill-box;transform-origin:50% 92%}
+/* Opsi A · karakter sektor (terus-menerus) */
+.a-sawit,.a-taman{animation:goyang 3.2s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes goyang{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.a-tambang{animation:maju 2.6s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes maju{0%,100%{transform:translate(-4px,2px)}50%{transform:translate(4px,-2px)}}
+.a-kontainer{animation:angkat 2.4s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes angkat{0%,60%,100%{transform:none}30%{transform:translateY(-6px)}}
+.a-menara,.a-listrik{animation:denyut 1.6s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes denyut{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.a-crane{animation:putar 5s ease-in-out infinite;animation-delay:var(--d);transform-origin:30% 92%}
+@keyframes putar{0%,100%{transform:skewX(0)}50%{transform:skewX(-4deg)}}
+.asap{fill:#E2E1DE;opacity:0;animation:kepul 3.2s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes kepul{0%{transform:scale(.4);opacity:.95}100%{transform:translate(8px,-34px) scale(1.7);opacity:0}}
+/* Opsi B · detak pertumbuhan (tempo = laju riil sektor) */
+.b-detak{animation:detak var(--dur) ease-in-out infinite;animation-delay:var(--d)}
+@keyframes detak{0%,100%{transform:none}50%{transform:translateY(var(--amp))}}
+.b-susut{transform:translateY(4px) scaleY(.9);opacity:.85}
+/* Opsi C · tumbuh dari tanah (berurutan menurut besar sektor) */
+.c-naikA{animation:naikA .7s cubic-bezier(.3,1.5,.5,1) both;animation-delay:var(--d)}
+.c-naikB{animation:naikB .7s cubic-bezier(.3,1.5,.5,1) both;animation-delay:var(--d)}
+@keyframes naikA{from{transform:scaleY(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes naikB{from{transform:scaleY(0);opacity:0}to{transform:none;opacity:1}}
+/* Opsi D · gelombang sorot (saat sektor dipilih) */
+.d-gelA{animation:gelA .7s ease-out both;animation-delay:var(--d)}
+.d-gelB{animation:gelB .7s ease-out both;animation-delay:var(--d)}
+@keyframes gelA{0%,100%{transform:none}40%{transform:translateY(-16px)}70%{transform:translateY(2px)}}
+@keyframes gelB{0%,100%{transform:none}40%{transform:translateY(-16px)}70%{transform:translateY(2px)}}
+.bayang{fill:#000;opacity:.07}.batang{fill:#7D7D7C}.daun{fill:var(--daun,#B5B5B4)}.daun2{fill:var(--daun2,#8C8C8B)}.tanah{fill:var(--tanah,#D4D4D3)}.tanah2{fill:var(--tanah2,#B5B5B4)}
+.dinding{fill:#F7F7F6}.dinding2{fill:#D6D6D5}.atap{fill:var(--atap,#B5B5B4)}.atap2{fill:var(--atap2,#888887)}.kaca{fill:#6B6B6A}.kaca2{fill:#4B4B4A}
+.logam{fill:#E2E2E1}.logam2{fill:#B5B5B4}.aksen{fill:var(--aksen,#9A9A99)}.aksen2{fill:var(--aksen2,#C3C3C2)}.putih{fill:#FFFFFF}.air{fill:#D4D4D3}.air2{fill:#A7A7A6}.roda{fill:#1F1F1F}
+.garis{fill:none;stroke:#7D7D7C;stroke-width:1.5}.garis2{fill:none;stroke:#3E3E3D;stroke-width:1.7}.garis3{fill:none;stroke:#fff;stroke-opacity:.7;stroke-width:1}
+@media (prefers-reduced-motion: reduce){.akar *{animation:none!important;transition:none!important}.b-susut{transform:translateY(4px)}}
+</style>
+</helmet>
+<div class="akar" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #FCFCFB; font-family: 'Nunito', sans-serif; color: #1F1F1F">
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Diorama Jawa Timur dengan opsi animasi per sektor">
+<defs>
+<symbol id="ik-sawit" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="batang" d="M24.5 79 L25.3 50 L26.9 50 L27.7 79 Z"/><path class="daun2" d="M26 50 Q18 36 9 37 Q19 42 25 52 Z"/><path class="daun2" d="M26 50 Q34 36 43 37 Q33 42 27 52 Z"/><path class="daun" d="M26 51 Q15 43 5 52 Q16 47 26 54 Z"/><path class="daun" d="M26 51 Q37 43 47 52 Q36 47 26 54 Z"/><path class="daun" d="M26 51 Q27 38 23 31 Q31 40 28 51 Z"/><circle class="aksen" cx="24.5" cy="54" r="2.2"/><circle class="aksen" cx="28" cy="54.5" r="2.2"/></symbol>
+<symbol id="ik-tambang" viewBox="0 0 52 90"><path class="tanah2" d="M4 80 Q10 64 20 69 Q27 59 37 68 Q45 72 48 80 Z"/><path class="tanah" d="M10 80 Q15 70 22 73 Q28 66 35 72 Q41 75 42 80 Z"/><polygon class="logam" points="22,84 30,88 30,79 22,75"/><polygon class="logam2" points="30,88 38,84 38,75 30,79"/><polygon class="aksen" points="22,75 30,71 38,75 30,79"/><polygon class="aksen2" points="14,79 20,82 20,75 14,72"/><polygon class="aksen" points="20,82 26,79 26,72 20,75"/><polygon class="kaca" points="14,72 20,69 26,72 20,75"/><ellipse class="roda" cx="24" cy="85" rx="2.6" ry="3"/><ellipse class="roda" cx="33" cy="88" rx="2.6" ry="3"/></symbol>
+<symbol id="ik-pabrik" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="10,77 26,85 26,69 10,61"/><polygon class="dinding2" points="26,85 42,77 42,61 26,69"/><polygon class="atap" points="10,61 26,53 42,61 26,69"/><polygon class="atap2" points="10,61 14,55 18,61 22,57 26,63 26,61"/><polygon class="putih" points="30.8,70 34,71.6 34,41.6 30.8,40"/><polygon class="logam2" points="34,71.6 37.2,70 37.2,40 34,41.6"/><polygon class="logam" points="30.8,40 34,38.4 37.2,40 34,41.6"/><rect class="aksen" x="30.8" y="49" width="6.4" height="3"/><rect class="kaca" x="18.9" y="69.8" width="3" height="3"/><rect class="kaca" x="30.1" y="69.8" width="3" height="3"/><rect class="kaca" x="13.3" y="72.6" width="3" height="3"/><rect class="kaca" x="35.7" y="72.6" width="3" height="3"/></symbol>
+<symbol id="ik-listrik" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis" d="M18 80 L24 42 L28 42 L34 80 M20 68 L32 68 M22 56 L30 56 M14 50 L38 50 M16 44 L36 44 M21 80 L30 56 M31 80 L22 56"/><circle class="aksen" cx="14" cy="51" r="1.5"/><circle class="aksen" cx="38" cy="51" r="1.5"/></symbol>
+<symbol id="ik-air" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis" d="M18 80 L20 58 M34 80 L32 58 M26 83 L26 60"/><ellipse class="air2" cx="26" cy="58" rx="11" ry="5"/><rect class="air2" x="15" y="44" width="22" height="14"/><ellipse class="air" cx="26" cy="44" rx="11" ry="5"/><rect class="putih" x="17" y="49" width="2" height="7"/></symbol>
+<symbol id="ik-crane" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="20,79 30,84 30,74 20,69"/><polygon class="dinding2" points="30,84 40,79 40,69 30,74"/><polygon class="tanah" points="20,69 30,64 40,69 30,74"/><path class="garis2" d="M14 80 L14 24 M17 80 L17 24 M14 30 L44 24 M14 24 L8 26 M40 25 L40 40"/><rect class="aksen" x="12" y="20" width="7" height="6"/><rect class="aksen" x="37.5" y="40" width="5" height="4"/></symbol>
+<symbol id="ik-toko" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="11,77 26,84.5 26,70.5 11,63"/><polygon class="dinding2" points="26,84.5 41,77 41,63 26,70.5"/><polygon class="atap" points="11,63 26,55.5 41,63 26,70.5"/><polygon class="aksen" points="11,63 26,70.5 26,74 9,66"/><polygon class="putih" points="15,65 19,67 18.6,70.3 14,68"/><polygon class="aksen2" points="26,70.5 41,63 43,66 26,74"/><polygon class="putih" points="33,67 37,65 38.5,68.2 34,70.3"/><rect class="kaca" x="15" y="72" width="7" height="6"/><rect class="kaca" x="30" y="72" width="7" height="6"/></symbol>
+<symbol id="ik-kontainer" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="aksen" points="12,80 22,85 22,76 12,71"/><polygon class="aksen2" points="22,85 32,80 32,71 22,76"/><polygon class="atap" points="12,71 22,66 32,71 22,76"/><polygon class="air" points="21,76 31,81 31,72 21,67"/><polygon class="air2" points="31,81 41,76 41,67 31,72"/><polygon class="atap" points="21,67 31,62 41,67 31,72"/><polygon class="daun" points="16,61 26,66 26,57 16,52"/><polygon class="daun2" points="26,66 36,61 36,52 26,57"/><polygon class="atap" points="16,52 26,47 36,52 26,57"/></symbol>
+<symbol id="ik-hotel" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="11,79 24,85.5 24,55.5 11,49"/><polygon class="dinding2" points="24,85.5 37,79 37,49 24,55.5"/><polygon class="atap" points="11,49 24,42.5 37,49 24,55.5"/><rect class="kaca" x="17.9" y="73.7" width="3" height="3"/><rect class="kaca" x="27.1" y="73.7" width="3" height="3"/><rect class="kaca" x="13.4" y="75.9" width="3" height="3"/><rect class="kaca" x="31.6" y="75.9" width="3" height="3"/><rect class="kaca" x="17.9" y="64.3" width="3" height="3"/><rect class="kaca" x="27.1" y="64.3" width="3" height="3"/><rect class="kaca" x="13.4" y="66.5" width="3" height="3"/><rect class="kaca" x="31.6" y="66.5" width="3" height="3"/><rect class="kaca" x="17.9" y="54.9" width="3" height="3"/><rect class="kaca" x="27.1" y="54.9" width="3" height="3"/><rect class="kaca" x="13.4" y="57.2" width="3" height="3"/><rect class="kaca" x="31.6" y="57.2" width="3" height="3"/><path class="garis2" d="M42 82 L42 66"/><path class="aksen" d="M33 67 Q42 57 51 67 Z"/><path class="putih" d="M38.5 67 Q42 59 45.5 67 Z"/></symbol>
+<symbol id="ik-menara" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis2" d="M20 80 L25 30 L27 30 L32 80 M22 66 L30 66 M23 52 L29 52 M21 74 L29 58 M31 74 L23 58"/><rect class="aksen" x="23.5" y="38" width="5" height="6"/><rect class="putih" x="23.5" y="44" width="5" height="6"/><path class="garis" d="M33 30 Q37 35 33 40 M36 27 Q42 35 36 43 M19 30 Q15 35 19 40"/></symbol>
+<symbol id="ik-bank" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="10,80 26,88 26,85 10,77"/><polygon class="logam" points="26,88 42,80 42,77 26,85"/><polygon class="putih" points="10,77 26,69 42,77 26,85"/><polygon class="dinding" points="12,77 26,84 26,68 12,61"/><polygon class="dinding2" points="26,84 40,77 40,61 26,68"/><polygon class="putih" points="12,61 26,54 40,61 26,68"/><rect class="putih" x="14" y="63" width="2.5" height="13"/><rect class="putih" x="19" y="65.5" width="2.5" height="13"/><rect class="putih" x="29" y="65.5" width="2.5" height="13"/><rect class="putih" x="34" y="63" width="2.5" height="13"/><polygon class="atap" points="10,61 26,53 26,69"/><polygon class="atap2" points="26,53 42,61 26,69"/><circle class="aksen2" cx="26" cy="61" r="2"/></symbol>
+<symbol id="ik-rumah" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="13,77 26,83.5 26,72.5 13,66"/><polygon class="dinding2" points="26,83.5 39,77 39,66 26,72.5"/><polygon class="atap" points="13,66 26,59.5 39,66 26,72.5"/><polygon class="atap" points="11,64 20,56 33,62.5 26,70"/><polygon class="atap2" points="26,70 33,62.5 41,66 39,66"/><polygon class="dinding2" points="26,70 33,62.5 39,66 39,70"/><rect class="kaca" x="17" y="71" width="4" height="5"/><rect class="aksen" x="31" y="72" width="4" height="7"/></symbol>
+<symbol id="ik-kantor" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="kaca" points="15,77 26,82.5 26,38.5 15,33"/><polygon class="kaca2" points="26,82.5 37,77 37,33 26,38.5"/><polygon class="putih" points="15,33 26,27.5 37,33 26,38.5"/><path class="garis3" d="M15 40 L26 45.5 L37 40"/><path class="garis3" d="M15 47 L26 52.5 L37 47"/><path class="garis3" d="M15 54 L26 59.5 L37 54"/><path class="garis3" d="M15 61 L26 66.5 L37 61"/><path class="garis3" d="M15 68 L26 73.5 L37 68"/><path class="garis3" d="M15 75 L26 80.5 L37 75"/></symbol>
+<symbol id="ik-pemda" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="10,77 26,85 26,72 10,64"/><polygon class="dinding2" points="26,85 42,77 42,64 26,72"/><polygon class="atap" points="10,64 26,56 42,64 26,72"/><rect class="dinding" x="22" y="50" width="8" height="10"/><path class="aksen2" d="M20 51 Q26 37 32 51 Z"/><path class="garis2" d="M26 44 L26 31"/><rect class="aksen" x="26" y="31" width="8" height="3"/><rect class="putih" x="26" y="34" width="8" height="3"/><rect class="kaca" x="14" y="66" width="2" height="7"/><rect class="kaca" x="19" y="68.5" width="2" height="7"/><rect class="kaca" x="31" y="68.5" width="2" height="7"/><rect class="kaca" x="36" y="66" width="2" height="7"/></symbol>
+<symbol id="ik-sekolah" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="10,78 24,85 24,71 10,64"/><polygon class="dinding2" points="24,85 38,78 38,64 24,71"/><polygon class="atap" points="10,64 24,57 38,64 24,71"/><rect class="kaca" x="17.6" y="71.5" width="3" height="3"/><rect class="kaca" x="27.4" y="71.5" width="3" height="3"/><rect class="kaca" x="12.7" y="73.9" width="3" height="3"/><rect class="kaca" x="32.3" y="73.9" width="3" height="3"/><polygon class="atap" points="9,64 24,57 24,71"/><polygon class="atap2" points="24,57 39,64 24,71"/><path class="garis2" d="M44 82 L44 52"/><rect class="aksen" x="44" y="52" width="7" height="3"/><rect class="putih" x="44" y="55" width="7" height="3"/></symbol>
+<symbol id="ik-rs" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="11,77 26,84.5 26,64.5 11,57"/><polygon class="logam" points="26,84.5 41,77 41,57 26,64.5"/><polygon class="putih" points="11,57 26,49.5 41,57 26,64.5"/><path class="aksen" d="M24 46 h4 v3 h3 v4 h-3 v3 h-4 v-3 h-3 v-4 h3 Z"/><path class="aksen" d="M30.5 72 h3 v2.5 h2.5 v3 h-2.5 v2.5 h-3 v-2.5 h-2.5 v-3 h2.5 Z"/><rect class="kaca" x="19.2" y="67.6" width="3" height="3"/><rect class="kaca" x="29.8" y="67.6" width="3" height="3"/><rect class="kaca" x="14" y="70.2" width="3" height="3"/><rect class="kaca" x="35" y="70.2" width="3" height="3"/></symbol>
+<symbol id="ik-taman" viewBox="0 0 52 90"><ellipse class="bayang" cx="22" cy="80" rx="13" ry="5"/><path class="batang" d="M21 80 L21.5 62 L23 62 L23.5 80 Z"/><circle class="daun2" cx="22" cy="56" r="10"/><circle class="daun" cx="20" cy="53" r="7"/><path class="garis2" d="M33 83 L33 78 M42 79 L42 74 M31 78 L44 73"/><circle class="aksen" cx="12" cy="76" r="1.6"/><circle class="aksen2" cx="35" cy="70" r="1.6"/></symbol>
+</defs>
+<ellipse cx="{{bayang.x}}" cy="{{bayang.y}}" rx="{{bayang.rx}}" ry="{{bayang.ry}}" fill="#000" fill-opacity="0.05"></ellipse>
+<g class="pulau">
+<path d="{{pulau.kiri}}" fill="#D6D6D5"></path>
+<path d="{{pulau.kanan}}" fill="#C1C1C1"></path>
+<path d="{{pulau.atas}}" fill="#EDEDEC" stroke="#FCFCFB" stroke-width="1.5" stroke-linejoin="round"></path>
+<sc-for list="{{obj}}" as="o" hint-placeholder-count="100">
+<g class="{{o.wrap}}" onClick="{{o.pick}}">
+<g class="{{o.gerak}}" style="{{o.gaya}}"><use href="{{o.ik}}" class="{{o.cls}}" x="{{o.x}}" y="{{o.y}}" width="{{o.w}}" height="{{o.h}}"></use></g>
+</g>
+</sc-for>
+<sc-for list="{{asap}}" as="a" hint-placeholder-count="0"><circle class="asap" cx="{{a.x}}" cy="{{a.y}}" r="5" style="animation-delay: {{a.delay}}"></circle></sc-for>
+</g>
+</svg>
+
+<div style="position: absolute; left: 40px; top: 32px; display: flex; flex-direction: column; gap: 10px">
+<a class="kembali" href="DioramaPulauLengkap.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Diorama final</a>
+<span class="pill">Eksplorasi animasi sektor</span>
+<h1 style="font-size: 46px; font-weight: 900; letter-spacing: -.015em; line-height: 1">{{h.nama}}</h1>
+</div>
+
+<div style="position: absolute; left: 40px; top: 188px; display: flex; gap: 10px; align-items: center">
+<div class="opsi">
+<sc-for list="{{opsi}}" as="b" hint-placeholder-count="4"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for>
+</div>
+<button class="ulang" onClick="{{ulang}}">Putar ulang</button>
+</div>
+
+<div class="kartu" style="position: absolute; left: 40px; bottom: 36px; width: 600px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="font-size: 18px; font-weight: 900">{{A.judul}}</h2>
+<span class="kecil">{{A.label}}</span>
+</div>
+<div style="display: grid; grid-template-columns: 112px 1fr; row-gap: 5px; column-gap: 10px; font-size: 13.5px; font-weight: 600; color: #3A3A3A; line-height: 1.35">
+<b style="font-weight: 900; color: #1F1F1F">Yang bergerak</b><span>{{A.apa}}</span>
+<b style="font-weight: 900; color: #1F1F1F">Artinya</b><span>{{A.arti}}</span>
+<b style="font-weight: 900; color: #1F1F1F">Kapan aktif</b><span>{{A.kapan}}</span>
+<b style="font-weight: 900; color: #1F1F1F">Ringan &amp; aman</b><span>{{A.aman}}</span>
+</div>
+</div>
+
+<div class="kartu" style="position: absolute; right: 36px; top: 32px; bottom: 36px; width: 430px; padding: 16px 12px 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 8px 6px">
+<h2 style="font-size: 20px; font-weight: 900">Sektor</h2>
+<span class="kecil">{{kolom}}</span>
+</div>
+<sc-for list="{{daftar}}" as="r" hint-placeholder-count="17">
+<button class="{{r.cls}}" onClick="{{r.pick}}">
+<svg width="30" height="30" viewBox="4 28 44 56" aria-hidden="true"><use href="{{r.ik}}" class="{{r.warna}}" x="0" y="0" width="52" height="90"></use></svg>
+<span>{{r.nama}}</span>
+<span class="{{r.vcls}}" style="font-weight: 800; font-size: 13px">{{r.teks}}</span>
+</button>
+</sc-for>
+<p class="kecil" style="padding: 6px 8px 0; font-size: 11.5px">Klik sektor untuk menyorot. Semua animasi mati bila perangkat memakai setelan “kurangi gerakan”.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/1e41bd128e20898522225326b1d47201';
+const KEY = '2025_konstan', LALU = '2024_konstan';
+const PROV = 'Jawa Timur';
+const V = { a: -8, sq: 0.66, lebar: 780, cx: 500, cy: 452, tebal: 26, n: 100 };
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const pct = (v) => nf1.format(v) + '%';
+const sgn = (g) => (g >= 0 ? '+' : '−') + pct(Math.abs(g));
+const f1 = (v) => v.toFixed(1);
+const KARAKTER = { sawit: 'a-sawit', taman: 'a-taman', tambang: 'a-tambang', kontainer: 'a-kontainer', menara: 'a-menara', listrik: 'a-listrik', crane: 'a-crane' };
+
+const OPSI = {
+  A: { label: 'A · Karakter sektor', judul: 'A · Karakter sektor', apa: 'Sawit dan pohon bergoyang, truk tambang maju-mundur, kontainer diangkat, menara/tiang listrik berdenyut, crane mengayun, cerobong pabrik mengepulkan asap. Gedung jasa diam.',
+    arti: 'Dekoratif: memberi “nyawa” dan membantu mengenali sektor dari bentuk gerak. Tidak mengodekan angka.',
+    kapan: 'Terus-menerus, pelan (2–5 detik per siklus) dengan jeda acak antar objek agar tidak serempak.',
+    aman: 'Hanya ±35 objek bergerak + 16 kepulan asap; transform/opacity saja.' },
+  B: { label: 'B · Detak pertumbuhan', judul: 'B · Detak pertumbuhan', apa: 'Semua bangunan berdenyut naik-turun. Sektor yang menyusut tidak berdenyut: amblas sedikit dan atapnya bata.',
+    arti: 'Tempo = laju riil sektor 2024→2025: ≥10% cepat (0,9 dtk), 6–10% (1,4 dtk), 3–6% (2 dtk), 0–3% lambat (3 dtk). Tinggi lompatan ikut membesar.',
+    kapan: 'Terus-menerus selama opsi aktif; cocok dipasang hanya di lensa Tumbuh.',
+    aman: '100 objek bergerak, tetapi satu keyframe sederhana; versi “kurangi gerakan” menyisakan amblas statis + warna.' },
+  C: { label: 'C · Tumbuh dari tanah', judul: 'C · Tumbuh dari tanah', apa: 'Bangunan muncul dari tanah, sektor demi sektor: sektor terbesar lebih dulu, lalu yang lebih kecil.',
+    arti: 'Urutan kemunculan = urutan besar sektor; jumlah bangunan yang muncul bersamaan = porsinya. Seperti grafik yang “dibangun” di depan mata.',
+    kapan: 'Sekali saat diorama dibuka dan setiap kali lensa/provinsi berganti (tombol “Putar ulang” untuk mencoba). Setelah itu diam.',
+    aman: 'Total ±3 detik lalu berhenti; paling hemat baterai.' },
+  D: { label: 'D · Gelombang sorot', judul: 'D · Gelombang sorot', apa: 'Saat sektor dipilih, bangunannya melompat bergelombang dari barat ke timur dan menyala bata; sektor lain meredup.',
+    arti: 'Menunjukkan di mana saja dan berapa banyak bangunan sektor itu (1 bangunan = 1% PDRB). Gelombang menuntun mata.',
+    kapan: 'Hanya saat sektor diklik (di pulau atau daftar). Selain itu diam total.',
+    aman: 'Paling tenang: yang bergerak hanya bangunan satu sektor, sekali, < 1,5 detik.' },
+};
+
+function diDalam(x, y, ring) { // ray casting
+  let ok = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) ok = !ok;
+  }
+  return ok;
+}
+
+function bangunPulau(p) {
+  const rad = V.a * Math.PI / 180, ca = Math.cos(rad), sa = Math.sin(rad);
+  const rings = p.rings.map((rs) => rs.split(' ').map((t) => t.split(',').map(Number)));
+  const R0 = (x, y) => [x * ca - y * sa, (x * sa + y * ca) * V.sq];
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  rings.forEach((r) => r.forEach(([x, y]) => { const q = R0(x, y); x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); }));
+  const S = V.lebar / (x1 - x0);
+  const P = (x, y) => { const q = R0(x, y); return [V.cx + (q[0] - (x0 + x1) / 2) * S, V.cy + (q[1] - (y0 + y1) / 2) * S]; };
+  let atas = '', kiri = '', kanan = '';
+  rings.forEach((rr) => {
+    const r = rr.map(([x, y]) => P(x, y));
+    let A = 0;
+    r.forEach((q, i) => { const o = r[(i + 1) % r.length]; A += q[0] * o[1] - o[0] * q[1]; });
+    const sg = A > 0 ? 1 : -1, T = V.tebal;
+    atas += 'M' + r.map((q) => f1(q[0]) + ',' + f1(q[1])).join('L') + 'Z';
+    r.forEach((q, i) => {
+      const o = r[(i + 1) % r.length], dx = o[0] - q[0], dy = o[1] - q[1];
+      if (-sg * dx <= 0) return;
+      const quad = 'M' + f1(q[0]) + ',' + f1(q[1]) + 'L' + f1(o[0]) + ',' + f1(o[1]) + 'L' + f1(o[0]) + ',' + f1(o[1] + T) + 'L' + f1(q[0]) + ',' + f1(q[1] + T) + 'Z';
+      if (sg * dy < 0) kiri += quad; else kanan += quad;
+    });
+  });
+  let bx0 = 1e9, bx1 = -1e9, by0 = 1e9, by1 = -1e9;
+  rings.forEach((r) => r.forEach(([x, y]) => { bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x); by0 = Math.min(by0, y); by1 = Math.max(by1, y); }));
+  let g = (bx1 - bx0) / 10, titik = [];
+  for (let iter = 0; iter < 40; iter++) {
+    titik = [];
+    for (let y = by0 + g / 2; y < by1; y += g * 0.75) for (let x = bx0 + g / 2; x < bx1; x += g) if (rings.some((r) => diDalam(x, y, r))) titik.push([x, y]);
+    if (titik.length >= V.n) break;
+    g *= 0.9;
+  }
+  titik.sort((a, b) => a[0] - b[0]);
+  const pilih = Array.from({ length: Math.min(V.n, titik.length) }, (_, i) => titik[Math.floor(i * titik.length / V.n)]);
+  const k = Math.min(1.1, Math.max(0.6, 1.3 * g * S / 52));
+  return { atas, kiri, kanan, titik: pilih.map(([x, y]) => P(x, y)), k, bayang: { x: V.cx, y: f1(V.cy + (y1 - y0) * S / 2 + V.tebal + 10), rx: f1(V.lebar / 2), ry: 34 } };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, pilih: null, opsi: 'A', putar: 0 };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, O = s.opsi, A = { ...OPSI[O] };
+    const opsi = Object.keys(OPSI).map((id) => ({ label: OPSI[id].label, cls: id === O ? 'on' : '', klik: () => this.setState({ opsi: id, putar: s.putar + 1 }) }));
+    const ulang = () => this.setState({ putar: s.putar + 1 });
+    A.label = O === 'B' ? 'mengodekan data' : O === 'C' ? 'transisi · sekali jalan' : O === 'D' ? 'interaksi' : 'suasana';
+    if (!d) return { opsi, ulang, A, obj: [], asap: [], daftar: [], pulau: {}, bayang: {}, kolom: '', h: { nama: PROV } };
+    const p = d.provinsi.find((x) => x.nama === PROV);
+    if (!this._pl) this._pl = bangunPulau(p);
+    const pl = this._pl, k = pl.k, tot = p.pdrb[KEY];
+    const sek = d.sektor.map((x, i) => ({ ...x, v: p.sektor[KEY][i], porsi: p.sektor[KEY][i] / tot * 100, g: (p.sektor[KEY][i] / p.sektor[LALU][i] - 1) * 100 }));
+    const fl = sek.map((x) => Math.floor(x.porsi));
+    const sisa = 100 - fl.reduce((a, b) => a + b, 0);
+    sek.map((x, i) => [x.porsi - fl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, sisa).forEach(([, i]) => { fl[i]++; });
+    sek.forEach((x, i) => { x.n = fl[i]; });
+    const urut = sek.slice().sort((a, b) => b.v - a.v);
+    urut.forEach((x, r) => { x.rank = r; });
+    const eff = s.pilih || urut[0].kode;
+    const seq = [];
+    urut.forEach((x) => { for (let j = 0; j < x.n; j++) seq.push(x); });
+    const pilihFn = (kode) => () => this.setState({ pilih: s.pilih === kode ? null : kode, putar: s.putar + 1 });
+    const ab = s.putar % 2 ? 'A' : 'B'; // ganti nama keyframe agar animasi sekali-jalan bisa diulang
+    const tt = pl.titik.map((q, i) => ({ X: q[0], Y: q[1], x: seq[i] || urut[urut.length - 1], i })).sort((a, b) => a.Y - b.Y);
+    const xs = tt.map((e) => e.X), xmin = Math.min(...xs), xmax = Math.max(...xs);
+    const tempo = (g) => g >= 10 ? 0.9 : g >= 6 ? 1.4 : g >= 3 ? 2 : 3;
+    const obj = tt.map((e) => {
+      const x = e.x, pilihan = x.kode === eff;
+      let gerak = 'gerak', gaya = '--d: 0ms', warna = '';
+      if (O === 'A') { gerak += ' ' + (KARAKTER[x.ikon] || ''); gaya = '--d: -' + ((e.i * 0.37) % 3).toFixed(2) + 's'; }
+      if (O === 'B') {
+        if (x.g < 0) { gerak += ' b-susut'; warna = 'cn'; }
+        else { gerak += ' b-detak'; gaya = '--d: -' + ((e.i * 0.29) % 2).toFixed(2) + 's; --dur: ' + tempo(x.g) + 's; --amp: -' + (2 + Math.min(x.g, 12) * 0.5).toFixed(1) + 'px'; }
+      }
+      if (O === 'C') { gerak += ' c-naik' + ab; gaya = '--d: ' + (x.rank * 160 + (e.i % 7) * 25) + 'ms'; }
+      if (O === 'D') { if (pilihan) { gerak += ' d-gel' + ab; warna = 'sorot'; gaya = '--d: ' + Math.round((e.X - xmin) / (xmax - xmin + 1) * 700) + 'ms'; } }
+      if (O !== 'B' && O !== 'D' && pilihan && s.pilih) warna = 'sorot';
+      return { ik: '#ik-' + x.ikon, cls: warna, gerak, gaya,
+        x: f1(e.X - 26 * k), y: f1(e.Y - 77 * k), w: f1(52 * k), h: f1(90 * k),
+        wrap: O === 'D' && s.pilih && !pilihan ? 'obj redup' : 'obj', pick: pilihFn(x.kode) };
+    });
+    const asap = O !== 'A' ? [] : tt.filter((e) => e.x.ikon === 'pabrik').filter((_, i) => i % 2 === 0).slice(0, 16)
+      .map((e, i) => ({ x: f1(e.X + 8 * k), y: f1(e.Y - 38 * k), delay: ((i * 0.43) % 3).toFixed(2) + 's' }));
+    const daftar = (O === 'B' ? sek.slice().sort((a, b) => b.g - a.g) : urut).map((x) => ({
+      ik: '#ik-' + x.ikon, warna: (O === 'B' && x.g < 0) || (O === 'D' && x.kode === eff) ? 'sorot' : '', nama: x.nama,
+      teks: O === 'B' ? sgn(x.g) + ' · ' + tempo(x.g) + ' dtk' : pct(x.porsi) + ' · ' + x.n + ' bgn', vcls: O === 'B' && x.g < 0 ? 'turun' : '',
+      cls: x.kode === eff && (O === 'D' || s.pilih) ? 'baris on' : 'baris', pick: pilihFn(x.kode) }));
+    return { opsi, ulang, A, obj, asap, daftar, pulau: { atas: pl.atas, kiri: pl.kiri, kanan: pl.kanan }, bayang: pl.bayang,
+      kolom: O === 'B' ? 'tumbuh riil · tempo detak' : 'porsi · jumlah bangunan', h: { nama: p.nama } };
+  }
+}
+</script>
+</body>
+</html>

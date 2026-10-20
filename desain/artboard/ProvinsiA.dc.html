@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Diorama Jawa Timur — Pulau Permen</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&amp;family=Nunito:wght@600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+.akar *{box-sizing:border-box}
+.akar h1,.akar h2,.akar p{margin:0}
+.judul{font-family:'Baloo 2',cursive;font-weight:800;letter-spacing:-.01em}
+.kartu{background:#fff;border:3px solid #2B2340;border-radius:22px;box-shadow:6px 6px 0 #2B2340}
+.stiker{display:inline-flex;align-items:center;background:#F2607A;color:#fff;border:2.5px solid #2B2340;border-radius:999px;padding:4px 14px;font-weight:900;font-size:14px;transform:rotate(-3deg)}
+.chip{background:#fff;border:2.5px solid #2B2340;border-radius:999px;padding:6px 14px;font-weight:900;font-size:16px}
+a.kembali{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px 0 10px;border-radius:999px;background:#fff;border:2.5px solid #2B2340;color:#2B2340;font:900 15px 'Nunito',sans-serif;text-decoration:none}
+a.kembali:hover{background:#FFF0C9}
+.pil{font:800 14px 'Nunito',sans-serif;color:#2B2340;background:#fff;border:2.5px solid #2B2340;border-radius:999px;padding:0 14px;height:44px;cursor:pointer}
+.pil.on{background:#2B2340;color:#fff}
+.baris{display:grid;grid-template-columns:38px 1fr auto;align-items:center;column-gap:10px;width:100%;background:none;border:0;border-radius:12px;padding:2px 8px;font:700 14px 'Nunito',sans-serif;color:#2B2340;text-align:left;cursor:pointer;min-height:38px}
+.baris:hover,.baris.on{background:#FFF0C9}
+.baris .bar{grid-column:2 / 4;height:5px;border-radius:9px;background:#FFE1D6;overflow:hidden;margin-top:-4px}
+.baris .bar i{display:block;height:100%;background:#F2607A;border-radius:9px}
+.ubin{fill:#D9F2B4;stroke:#B5DB8C;stroke-width:1}
+.ubin.on{fill:#FFE08A;stroke:#F2A23C;stroke-width:1.5}
+.obj{cursor:pointer;transition:opacity .3s}
+.obj:hover{filter:brightness(1.08)}
+.redup{opacity:.22}
+.masuk{animation:muncul .7s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes muncul{from{transform:translateY(-46px);opacity:0}to{transform:none;opacity:1}}
+.o-sawit,.o-taman{animation:goyang 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 92%}
+@keyframes goyang{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.o-tambang{animation:maju 2.4s ease-in-out infinite}
+@keyframes maju{0%,100%{transform:translate(-3px,1.5px)}50%{transform:translate(3px,-1.5px)}}
+.o-menara{animation:kedip 1.6s steps(2) infinite}
+@keyframes kedip{50%{filter:brightness(1.15)}}
+.asap{fill:#fff;stroke:#2B2340;stroke-opacity:.15;opacity:0;animation:kepul 2.8s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes kepul{0%{transform:translate(0,0) scale(.4);opacity:.95}100%{transform:translate(8px,-38px) scale(1.7);opacity:0}}
+.laut{animation:arus 9s linear infinite}
+@keyframes arus{to{transform:translateX(60px)}}
+.riak{fill:none;stroke:#fff;stroke-width:3;opacity:.7;animation:riak 3s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes riak{from{transform:scale(.96);opacity:.8}to{transform:scale(1.06);opacity:0}}
+.balon{position:absolute;transform:translate(-50%,-100%);pointer-events:none;background:#fff;border:3px solid #2B2340;border-radius:18px;padding:10px 14px;box-shadow:4px 4px 0 #2B2340;white-space:nowrap;animation:angguk 2.6s ease-in-out infinite}
+.balon::after{content:'';position:absolute;left:50%;bottom:-10px;width:14px;height:14px;background:#fff;border-right:3px solid #2B2340;border-bottom:3px solid #2B2340;transform:translateX(-50%) rotate(45deg)}
+@keyframes angguk{0%,100%{margin-top:0}50%{margin-top:-8px}}
+.bayang{fill:#2B2340;opacity:.14}.batang{fill:#8A5A3C}.daun{fill:#4CB25A}.daun2{fill:#2E8040}.tanah{fill:#C98B4F}.tanah2{fill:#9C6334}
+.dinding{fill:#FFE1C4}.dinding2{fill:#F2B98F}.atap{fill:#F2607A}.atap2{fill:#C9445F}.kaca{fill:#8FD3F0}.kaca2{fill:#5FB3DC}
+.logam{fill:#CFC8DE}.logam2{fill:#9A92AD}.aksen{fill:#F2607A}.aksen2{fill:#FFB03B}.putih{fill:#fff}.air{fill:#8FD3F0}.air2{fill:#4AA3D8}.roda{fill:#2B2340}
+.garis{fill:none;stroke:#6B6480;stroke-width:1.6}.garis2{fill:none;stroke:#2B2340;stroke-width:1.8}.garis3{fill:none;stroke:#fff;stroke-opacity:.6;stroke-width:1}
+@media (prefers-reduced-motion: reduce){.akar *,.akar *::before,.akar *::after{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="akar" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #BFE6F2; font-family: 'Nunito', sans-serif; color: #2B2340">
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Diorama Jawa Timur: 100 petak, tiap petak 1 persen PDRB, diisi bangunan sesuai lapangan usaha">
+<defs>
+<pattern id="ombakP" width="60" height="34" patternUnits="userSpaceOnUse"><path d="M8 18 q7 -7 14 0 q7 7 14 0" fill="none" stroke="#A3D6E8" stroke-width="2.4" stroke-linecap="round"></path></pattern>
+<symbol id="ik-sawit" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="batang" d="M24.5 79 L25.3 50 L26.9 50 L27.7 79 Z"/><path class="daun2" d="M26 50 Q18 36 9 37 Q19 42 25 52 Z"/><path class="daun2" d="M26 50 Q34 36 43 37 Q33 42 27 52 Z"/><path class="daun" d="M26 51 Q15 43 5 52 Q16 47 26 54 Z"/><path class="daun" d="M26 51 Q37 43 47 52 Q36 47 26 54 Z"/><path class="daun" d="M26 51 Q27 38 23 31 Q31 40 28 51 Z"/><circle class="aksen" cx="24.5" cy="54" r="2.2"/><circle class="aksen" cx="28" cy="54.5" r="2.2"/></symbol>
+<symbol id="ik-tambang" viewBox="0 0 52 90"><path class="tanah2" d="M4 80 Q10 64 20 69 Q27 59 37 68 Q45 72 48 80 Z"/><path class="tanah" d="M10 80 Q15 70 22 73 Q28 66 35 72 Q41 75 42 80 Z"/><polygon class="logam" points="22,84 30,88 30,79 22,75"/><polygon class="logam2" points="30,88 38,84 38,75 30,79"/><polygon class="aksen" points="22,75 30,71 38,75 30,79"/><polygon class="aksen2" points="14,79 20,82 20,75 14,72"/><polygon class="aksen" points="20,82 26,79 26,72 20,75"/><polygon class="kaca" points="14,72 20,69 26,72 20,75"/><ellipse class="roda" cx="24" cy="85" rx="2.6" ry="3"/><ellipse class="roda" cx="33" cy="88" rx="2.6" ry="3"/></symbol>
+<symbol id="ik-pabrik" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="10,77 26,85 26,69 10,61"/><polygon class="dinding2" points="26,85 42,77 42,61 26,69"/><polygon class="atap" points="10,61 26,53 42,61 26,69"/><polygon class="atap2" points="10,61 14,55 18,61 22,57 26,63 26,61"/><polygon class="putih" points="30.8,70 34,71.6 34,41.6 30.8,40"/><polygon class="logam2" points="34,71.6 37.2,70 37.2,40 34,41.6"/><polygon class="logam" points="30.8,40 34,38.4 37.2,40 34,41.6"/><rect class="aksen" x="30.8" y="49" width="6.4" height="3"/><rect class="kaca" x="18.9" y="69.8" width="3" height="3"/><rect class="kaca" x="30.1" y="69.8" width="3" height="3"/><rect class="kaca" x="13.3" y="72.6" width="3" height="3"/><rect class="kaca" x="35.7" y="72.6" width="3" height="3"/></symbol>
+<symbol id="ik-listrik" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis" d="M18 80 L24 42 L28 42 L34 80 M20 68 L32 68 M22 56 L30 56 M14 50 L38 50 M16 44 L36 44 M21 80 L30 56 M31 80 L22 56"/><circle class="aksen" cx="14" cy="51" r="1.5"/><circle class="aksen" cx="38" cy="51" r="1.5"/></symbol>
+<symbol id="ik-air" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis" d="M18 80 L20 58 M34 80 L32 58 M26 83 L26 60"/><ellipse class="air2" cx="26" cy="58" rx="11" ry="5"/><rect class="air2" x="15" y="44" width="22" height="14"/><ellipse class="air" cx="26" cy="44" rx="11" ry="5"/><rect class="putih" x="17" y="49" width="2" height="7"/></symbol>
+<symbol id="ik-crane" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="20,79 30,84 30,74 20,69"/><polygon class="dinding2" points="30,84 40,79 40,69 30,74"/><polygon class="tanah" points="20,69 30,64 40,69 30,74"/><path class="garis2" d="M14 80 L14 24 M17 80 L17 24 M14 30 L44 24 M14 24 L8 26 M40 25 L40 40"/><rect class="aksen" x="12" y="20" width="7" height="6"/><rect class="aksen" x="37.5" y="40" width="5" height="4"/></symbol>
+<symbol id="ik-toko" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="11,77 26,84.5 26,70.5 11,63"/><polygon class="dinding2" points="26,84.5 41,77 41,63 26,70.5"/><polygon class="atap" points="11,63 26,55.5 41,63 26,70.5"/><polygon class="aksen" points="11,63 26,70.5 26,74 9,66"/><polygon class="putih" points="15,65 19,67 18.6,70.3 14,68"/><polygon class="aksen2" points="26,70.5 41,63 43,66 26,74"/><polygon class="putih" points="33,67 37,65 38.5,68.2 34,70.3"/><rect class="kaca" x="15" y="72" width="7" height="6"/><rect class="kaca" x="30" y="72" width="7" height="6"/></symbol>
+<symbol id="ik-kontainer" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="aksen" points="12,80 22,85 22,76 12,71"/><polygon class="aksen2" points="22,85 32,80 32,71 22,76"/><polygon class="atap" points="12,71 22,66 32,71 22,76"/><polygon class="air" points="21,76 31,81 31,72 21,67"/><polygon class="air2" points="31,81 41,76 41,67 31,72"/><polygon class="atap" points="21,67 31,62 41,67 31,72"/><polygon class="daun" points="16,61 26,66 26,57 16,52"/><polygon class="daun2" points="26,66 36,61 36,52 26,57"/><polygon class="atap" points="16,52 26,47 36,52 26,57"/></symbol>
+<symbol id="ik-hotel" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="11,79 24,85.5 24,55.5 11,49"/><polygon class="dinding2" points="24,85.5 37,79 37,49 24,55.5"/><polygon class="atap" points="11,49 24,42.5 37,49 24,55.5"/><rect class="kaca" x="17.9" y="73.7" width="3" height="3"/><rect class="kaca" x="27.1" y="73.7" width="3" height="3"/><rect class="kaca" x="13.4" y="75.9" width="3" height="3"/><rect class="kaca" x="31.6" y="75.9" width="3" height="3"/><rect class="kaca" x="17.9" y="64.3" width="3" height="3"/><rect class="kaca" x="27.1" y="64.3" width="3" height="3"/><rect class="kaca" x="13.4" y="66.5" width="3" height="3"/><rect class="kaca" x="31.6" y="66.5" width="3" height="3"/><rect class="kaca" x="17.9" y="54.9" width="3" height="3"/><rect class="kaca" x="27.1" y="54.9" width="3" height="3"/><rect class="kaca" x="13.4" y="57.2" width="3" height="3"/><rect class="kaca" x="31.6" y="57.2" width="3" height="3"/><path class="garis2" d="M42 82 L42 66"/><path class="aksen" d="M33 67 Q42 57 51 67 Z"/><path class="putih" d="M38.5 67 Q42 59 45.5 67 Z"/></symbol>
+<symbol id="ik-menara" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis2" d="M20 80 L25 30 L27 30 L32 80 M22 66 L30 66 M23 52 L29 52 M21 74 L29 58 M31 74 L23 58"/><rect class="aksen" x="23.5" y="38" width="5" height="6"/><rect class="putih" x="23.5" y="44" width="5" height="6"/><path class="garis" d="M33 30 Q37 35 33 40 M36 27 Q42 35 36 43 M19 30 Q15 35 19 40"/></symbol>
+<symbol id="ik-bank" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="10,80 26,88 26,85 10,77"/><polygon class="logam" points="26,88 42,80 42,77 26,85"/><polygon class="putih" points="10,77 26,69 42,77 26,85"/><polygon class="dinding" points="12,77 26,84 26,68 12,61"/><polygon class="dinding2" points="26,84 40,77 40,61 26,68"/><polygon class="putih" points="12,61 26,54 40,61 26,68"/><rect class="putih" x="14" y="63" width="2.5" height="13"/><rect class="putih" x="19" y="65.5" width="2.5" height="13"/><rect class="putih" x="29" y="65.5" width="2.5" height="13"/><rect class="putih" x="34" y="63" width="2.5" height="13"/><polygon class="atap" points="10,61 26,53 26,69"/><polygon class="atap2" points="26,53 42,61 26,69"/><circle class="aksen2" cx="26" cy="61" r="2"/></symbol>
+<symbol id="ik-rumah" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="13,77 26,83.5 26,72.5 13,66"/><polygon class="dinding2" points="26,83.5 39,77 39,66 26,72.5"/><polygon class="atap" points="13,66 26,59.5 39,66 26,72.5"/><polygon class="atap" points="11,64 20,56 33,62.5 26,70"/><polygon class="atap2" points="26,70 33,62.5 41,66 39,66"/><polygon class="dinding2" points="26,70 33,62.5 39,66 39,70"/><rect class="kaca" x="17" y="71" width="4" height="5"/><rect class="aksen" x="31" y="72" width="4" height="7"/></symbol>
+<symbol id="ik-kantor" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="kaca" points="15,77 26,82.5 26,38.5 15,33"/><polygon class="kaca2" points="26,82.5 37,77 37,33 26,38.5"/><polygon class="putih" points="15,33 26,27.5 37,33 26,38.5"/><path class="garis3" d="M15 40 L26 45.5 L37 40"/><path class="garis3" d="M15 47 L26 52.5 L37 47"/><path class="garis3" d="M15 54 L26 59.5 L37 54"/><path class="garis3" d="M15 61 L26 66.5 L37 61"/><path class="garis3" d="M15 68 L26 73.5 L37 68"/><path class="garis3" d="M15 75 L26 80.5 L37 75"/></symbol>
+<symbol id="ik-pemda" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="10,77 26,85 26,72 10,64"/><polygon class="dinding2" points="26,85 42,77 42,64 26,72"/><polygon class="atap" points="10,64 26,56 42,64 26,72"/><rect class="dinding" x="22" y="50" width="8" height="10"/><path class="aksen2" d="M20 51 Q26 37 32 51 Z"/><path class="garis2" d="M26 44 L26 31"/><rect class="aksen" x="26" y="31" width="8" height="3"/><rect class="putih" x="26" y="34" width="8" height="3"/><rect class="kaca" x="14" y="66" width="2" height="7"/><rect class="kaca" x="19" y="68.5" width="2" height="7"/><rect class="kaca" x="31" y="68.5" width="2" height="7"/><rect class="kaca" x="36" y="66" width="2" height="7"/></symbol>
+<symbol id="ik-sekolah" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="10,78 24,85 24,71 10,64"/><polygon class="dinding2" points="24,85 38,78 38,64 24,71"/><polygon class="atap" points="10,64 24,57 38,64 24,71"/><rect class="kaca" x="17.6" y="71.5" width="3" height="3"/><rect class="kaca" x="27.4" y="71.5" width="3" height="3"/><rect class="kaca" x="12.7" y="73.9" width="3" height="3"/><rect class="kaca" x="32.3" y="73.9" width="3" height="3"/><polygon class="atap" points="9,64 24,57 24,71"/><polygon class="atap2" points="24,57 39,64 24,71"/><path class="garis2" d="M44 82 L44 52"/><rect class="aksen" x="44" y="52" width="7" height="3"/><rect class="putih" x="44" y="55" width="7" height="3"/></symbol>
+<symbol id="ik-rs" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="11,77 26,84.5 26,64.5 11,57"/><polygon class="logam" points="26,84.5 41,77 41,57 26,64.5"/><polygon class="putih" points="11,57 26,49.5 41,57 26,64.5"/><path class="aksen" d="M24 46 h4 v3 h3 v4 h-3 v3 h-4 v-3 h-3 v-4 h3 Z"/><path class="aksen" d="M30.5 72 h3 v2.5 h2.5 v3 h-2.5 v2.5 h-3 v-2.5 h-2.5 v-3 h2.5 Z"/><rect class="kaca" x="19.2" y="67.6" width="3" height="3"/><rect class="kaca" x="29.8" y="67.6" width="3" height="3"/><rect class="kaca" x="14" y="70.2" width="3" height="3"/><rect class="kaca" x="35" y="70.2" width="3" height="3"/></symbol>
+<symbol id="ik-taman" viewBox="0 0 52 90"><ellipse class="bayang" cx="22" cy="80" rx="13" ry="5"/><path class="batang" d="M21 80 L21.5 62 L23 62 L23.5 80 Z"/><circle class="daun2" cx="22" cy="56" r="10"/><circle class="daun" cx="20" cy="53" r="7"/><path class="garis2" d="M33 83 L33 78 M42 79 L42 74 M31 78 L44 73"/><circle class="aksen" cx="12" cy="76" r="1.6"/><circle class="aksen2" cx="35" cy="70" r="1.6"/></symbol>
+</defs>
+<rect class="laut" x="-120" y="0" width="1700" height="900" fill="url(#ombakP)"></rect>
+<ellipse class="riak" cx="520" cy="490" rx="470" ry="232"></ellipse>
+<ellipse cx="520" cy="490" rx="440" ry="214" fill="#A9DCEC"></ellipse>
+<polygon points="{{pentas.kiri}}" fill="#E7B77B" stroke="#2B2340" stroke-width="2.5" stroke-linejoin="round"></polygon>
+<polygon points="{{pentas.kanan}}" fill="#CD9358" stroke="#2B2340" stroke-width="2.5" stroke-linejoin="round"></polygon>
+<polygon points="{{pentas.atas}}" fill="#D9F2B4" stroke="#2B2340" stroke-width="2.5" stroke-linejoin="round"></polygon>
+<sc-for list="{{ubin}}" as="u" hint-placeholder-count="100"><polygon class="{{u.cls}}" points="{{u.pts}}"></polygon></sc-for>
+<sc-for list="{{obj}}" as="o" hint-placeholder-count="100">
+<g class="masuk" style="animation-delay: {{o.delay}}">
+<g class="{{o.wrap}}" onClick="{{o.pick}}"><use href="{{o.ik}}" class="{{o.cls}}" x="{{o.x}}" y="{{o.y}}" width="{{o.w}}" height="{{o.h}}"></use></g>
+</g>
+</sc-for>
+<sc-for list="{{asap}}" as="a" hint-placeholder-count="0"><circle class="asap" cx="{{a.x}}" cy="{{a.y}}" r="6" style="animation-delay: {{a.delay}}"></circle></sc-for>
+</svg>
+
+<div style="position: absolute; left: 40px; top: 32px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<a class="kembali" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B2340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Peta Indonesia</a>
+<span class="stiker">Diorama PDRB {{tahun}}</span>
+<h1 class="judul" style="font-size: 64px; line-height: .95">{{h.nama}}</h1>
+<div style="display: flex; gap: 8px">
+<span class="chip">{{h.nilai}}</span>
+<span class="chip">{{h.peringkat}}</span>
+</div>
+</div>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="balon" style="left: {{c.x}}px; top: {{c.y}}px">
+<p style="font-size: 13px; font-weight: 900; color: #5A5170">{{c.nama}}</p>
+<p class="judul" style="font-size: 26px; line-height: 1.05">{{c.nilai}}</p>
+<p style="font-size: 14px; font-weight: 800">{{c.porsi}} PDRB · {{c.petak}}</p>
+</div>
+</sc-if>
+
+<div class="kartu" style="position: absolute; left: 40px; bottom: 36px; width: 520px; padding: 12px 16px; display: flex; gap: 14px; align-items: center">
+<svg width="44" height="30" viewBox="0 0 44 30" aria-hidden="true"><polygon points="22,2 42,15 22,28 2,15" fill="#FFE08A" stroke="#2B2340" stroke-width="2.5" stroke-linejoin="round"></polygon></svg>
+<p style="font-size: 15px; font-weight: 700; line-height: 1.35"><b>1 petak = 1% PDRB.</b> 100 petak diisi menurut porsi tiap lapangan usaha. Klik bangunan atau baris sektor untuk melihat nilainya.</p>
+</div>
+
+<sc-if value="{{memuat}}" hint-placeholder-val="{{ false }}">
+<div class="kartu" style="position: absolute; left: 360px; top: 420px; width: 320px; padding: 18px; text-align: center; font-weight: 900; font-size: 18px">Membangun diorama…</div>
+</sc-if>
+
+<div class="kartu" style="position: absolute; right: 36px; top: 32px; bottom: 36px; width: 430px; padding: 16px 14px 10px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px">
+<h2 class="judul" style="font-size: 26px">Isi diorama</h2>
+<span style="font-size: 13px; font-weight: 800; color: #5A5170">17 lapangan usaha</span>
+</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap; padding: 0 6px 4px">
+<sc-for list="{{tombolTahun}}" as="b" hint-placeholder-count="2"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for>
+<sc-for list="{{tombolHarga}}" as="b" hint-placeholder-count="2"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 0">
+<sc-for list="{{daftar}}" as="r" hint-placeholder-count="17">
+<button class="{{r.cls}}" onClick="{{r.pick}}">
+<svg width="38" height="34" viewBox="2 26 48 60" aria-hidden="true"><use href="{{r.ik}}" x="0" y="0" width="52" height="90"></use></svg>
+<span>{{r.nama}}</span>
+<span style="font-weight: 900; font-size: 13px">{{r.nilai}} · {{r.porsi}}</span>
+<span class="bar"><i style="width: {{r.lebar}}"></i></span>
+</button>
+</sc-for>
+</div>
+<p style="margin-top: auto; padding: 0 6px; font-size: 11.5px; font-weight: 700; color: #4A4260">Sumber: BPS. {{status}}. Nilai dalam triliun rupiah.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/7c48d8b70e97daf4921a210982d64c39';
+const PROV = 'Jawa Timur';
+const G = { dx: 520, dy: 300, k: 1.45, tebal: 30 };
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rp = (v) => 'Rp ' + nf1.format(v / 1000) + ' T';
+const pct = (v) => nf1.format(v) + '%';
+const pt = (p, dy) => p[0].toFixed(1) + ',' + (p[1] + (dy || 0)).toFixed(1);
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, tahun: '2025', harga: 'berlaku', pilih: null };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, key = s.tahun + '_' + s.harga;
+    const tombolTahun = ['2024', '2025'].map((t) => ({ label: t, cls: s.tahun === t ? 'pil on' : 'pil', klik: () => this.setState({ tahun: t }) }));
+    const tombolHarga = [['berlaku', 'Berlaku'], ['konstan', 'Konstan 2010']].map(([k, l]) => ({ label: l, cls: s.harga === k ? 'pil on' : 'pil', klik: () => this.setState({ harga: k }) }));
+    const k = G.k, tw = 26 * k, th = 13 * k, T = G.tebal;
+    const L = [G.dx - 10 * tw, G.dy + 9 * th], R = [G.dx + 10 * tw, G.dy + 9 * th], A = [G.dx, G.dy - th], B = [G.dx, G.dy + 19 * th];
+    const pentas = {
+      atas: [A, R, B, L].map((q) => pt(q)).join(' '),
+      kiri: [pt(L), pt(B), pt(B, T), pt(L, T)].join(' '),
+      kanan: [pt(B), pt(R), pt(R, T), pt(B, T)].join(' '),
+    };
+    const dasar = { tombolTahun, tombolHarga, pentas, tahun: s.tahun, status: s.tahun === '2024' ? '2024 angka sementara' : '2025 angka sangat sementara', siap: !!d, memuat: !d };
+    if (!d) return { ...dasar, ubin: [], obj: [], asap: [], daftar: [], c: {}, h: { nama: PROV } };
+    const p = d.provinsi.find((x) => x.nama === PROV), tot = p.pdrb[key], vals = p.sektor[key];
+    const sek = d.sektor.map((x, i) => ({ ...x, v: vals[i], porsi: vals[i] / tot * 100 }));
+    // pembagian 100 petak: sisa terbesar (largest remainder)
+    const fl = sek.map((x) => Math.floor(x.porsi));
+    const sisa = 100 - fl.reduce((a, b) => a + b, 0);
+    sek.map((x, i) => [x.porsi - fl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, sisa).forEach(([, i]) => { fl[i]++; });
+    sek.forEach((x, i) => { x.n = fl[i]; });
+    const urut = sek.slice().sort((a, b) => b.v - a.v);
+    const eff = s.pilih || urut[0].kode;
+    const seq = [];
+    urut.forEach((x) => { for (let j = 0; j < x.n; j++) seq.push(x); });
+    const sel = [];
+    for (let r = 0; r < 10; r++) for (let c = 0; c < 10; c++) {
+      sel.push({ r, c, x: seq[r * 10 + (r % 2 ? 9 - c : c)], X: G.dx + (c - r) * tw, Y: G.dy + (c + r) * th });
+    }
+    sel.sort((a, b) => (a.r + a.c) - (b.r + b.c) || a.r - b.r);
+    const pilihFn = (kode) => () => this.setState({ pilih: s.pilih === kode ? null : kode });
+    const ubin = sel.map((e) => ({ pts: [[e.X - tw, e.Y], [e.X, e.Y - th], [e.X + tw, e.Y], [e.X, e.Y + th]].map((q) => pt(q)).join(' '), cls: e.x.kode === eff ? 'ubin on' : 'ubin' }));
+    const obj = sel.map((e) => ({
+      ik: '#ik-' + e.x.ikon, cls: 'o-' + e.x.ikon,
+      x: (e.X - 26 * k).toFixed(1), y: (e.Y - 77 * k).toFixed(1), w: (52 * k).toFixed(1), h: (90 * k).toFixed(1),
+      wrap: s.pilih && e.x.kode !== s.pilih ? 'obj redup' : 'obj', delay: ((e.r + e.c) * 40) + 'ms', pick: pilihFn(e.x.kode),
+    }));
+    const asap = [];
+    sel.forEach((e, i) => { if (e.x.ikon === 'pabrik') [0, 1].forEach((j) => asap.push({ x: (e.X + 8 * k).toFixed(1), y: (e.Y - 38 * k).toFixed(1), delay: (j * 1.4 + (i % 5) * 0.3).toFixed(1) + 's' })); });
+    const se = sek.find((x) => x.kode === eff), mine = sel.filter((e) => e.x.kode === eff);
+    const c = { nama: se.nama, nilai: rp(se.v), porsi: pct(se.porsi), petak: se.n ? se.n + ' petak' : 'kurang dari 1 petak',
+      x: mine.length ? (mine.reduce((a, e) => a + e.X, 0) / mine.length).toFixed(1) : G.dx,
+      y: mine.length ? (Math.min(...mine.map((e) => e.Y)) - 70 * k).toFixed(1) : G.dy - 100 };
+    const daftar = urut.map((x) => ({ ik: '#ik-' + x.ikon, nama: x.nama, nilai: nf1.format(x.v / 1000) + ' T', porsi: pct(x.porsi),
+      lebar: (x.porsi / urut[0].porsi * 100).toFixed(1) + '%', cls: x.kode === eff ? 'baris on' : 'baris', pick: pilihFn(x.kode) }));
+    const rank = d.provinsi.filter((q) => q.pdrb[key] > tot).length + 1;
+    return { ...dasar, ubin, obj, asap, daftar, c, h: { nama: p.nama, nilai: rp(tot), peringkat: '#' + rank + ' dari 38 provinsi' } };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>PDRB Indonesia — Cetak Riso</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&amp;family=Karla:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+.akar *{box-sizing:border-box}
+.akar h1,.akar h2,.akar p{margin:0}
+.bagel{font-family:'Bagel Fat One',cursive;font-weight:400}
+.label{font:800 12px 'Karla',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.tg{height:44px;padding:0 16px;border:2.5px solid #1E1B4B;background:#fff;color:#1E1B4B;font:800 15px 'Karla',sans-serif;cursor:pointer;border-radius:0}
+.tg + .tg{margin-left:-2.5px}
+.tg:hover{background:#FFF6CC}
+.tg.on{background:#FF4F8B}
+.prov{cursor:pointer;transition:transform .2s steps(3)}
+.prov:hover{transform:translate(-3px,-6px)}
+.prov.on{transform:translate(-4px,-10px)}
+.atas{stroke:#1E1B4B;stroke-width:1.1;stroke-linejoin:round}
+.prov.on .atas{stroke-width:2.6}
+.a0{fill:#FFF6CC}.a1{fill:#FFE066}.a2{fill:#FFB0CB}.a3{fill:#FF6FA3}.a4{fill:#4C6FE0}
+.k0,.k1,.k2,.k3,.k4{fill:#3B3680}
+.n0,.n1,.n2,.n3,.n4{fill:#1E1B4B}
+.masuk{animation:cetak .5s steps(4) both}
+@keyframes cetak{from{transform:translate(8px,-8px);opacity:0}to{transform:none;opacity:1}}
+.nomor{position:absolute;transform:translate(-50%,-100%);width:24px;height:24px;background:#1E1B4B;color:#FFD83D;font:800 14px/24px 'Karla',sans-serif;text-align:center;pointer-events:none}
+.sembunyi{display:none}
+.pin{position:absolute;transform:translate(-50%,-100%);pointer-events:none;background:#FFD83D;border:2.5px solid #1E1B4B;padding:4px 10px;font:800 15px 'Karla',sans-serif;white-space:nowrap;box-shadow:4px 4px 0 #FF4F8B;animation:goyang 1.8s steps(2) infinite}
+@keyframes goyang{50%{transform:translate(-50%,-100%) rotate(-2deg)}}
+.tiket{position:relative;display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;background:#fff;border:2.5px solid #1E1B4B;padding:12px 14px 12px;font-family:'Karla',sans-serif;color:#1E1B4B;cursor:pointer;min-height:44px}
+.tiket:hover{background:#FFF6CC}
+.tiket.on{background:#FFD83D;box-shadow:5px 5px 0 #FF4F8B}
+.berjalan{display:inline-block;white-space:nowrap;animation:jalan 30s linear infinite}
+@keyframes jalan{to{transform:translateX(-50%)}}
+a.tombol{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 18px;background:#1E1B4B;color:#FFD83D;font:800 17px 'Karla',sans-serif;text-decoration:none}
+a.tombol:hover{background:#3B3680}
+.baris{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:2px dashed #1E1B4B;font-size:15px;font-weight:600}
+.baris b{font-weight:800;font-size:18px}
+.s0{background:#FF4F8B}.s1{background:#4C6FE0}.s2{background:#FFD83D}.s3{background:#3FB68B}.s4{background:#1E1B4B}
+@media (prefers-reduced-motion: reduce){.akar *{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="akar" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background-color: #D7ECF7; background-image: radial-gradient(#B7D8EC 1.4px, transparent 1.7px); background-size: 10px 10px; font-family: 'Karla', sans-serif; color: #1E1B4B">
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Peta isometrik 38 provinsi Indonesia, tinggi sebanding PDRB">
+<path d="{{bayang}}" fill="#FF4F8B" fill-opacity="0.55"></path>
+<sc-for list="{{provs}}" as="p" hint-placeholder-count="38">
+<g class="masuk" style="animation-delay: {{p.delay}}">
+<g class="{{p.cls}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onClick="{{p.pick}}">
+<path class="{{p.kk}}" d="{{p.kiri}}"></path>
+<path class="{{p.kn}}" d="{{p.kanan}}"></path>
+<path class="{{p.ka}}" d="{{p.atas}}"></path>
+</g>
+</g>
+</sc-for>
+</svg>
+
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<div class="{{t.nc}}" style="left: {{t.bx}}px; top: {{t.by}}px">{{t.no}}</div>
+</sc-for>
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="pin" style="left: {{k.px}}px; top: {{k.py}}px">{{k.nama}}</div>
+</sc-if>
+
+<div style="position: absolute; left: 0; top: 0; right: 0; height: 104px; background: #FFD83D; border-bottom: 3px solid #1E1B4B; display: flex; align-items: center; justify-content: space-between; padding: 0 34px; gap: 24px">
+<div style="display: flex; align-items: baseline; gap: 18px">
+<h1 class="bagel" style="font-size: 46px; line-height: 1">PDRB 38 PROVINSI</h1>
+<span class="label">Edisi {{tahun}} · {{status}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 18px">
+<div style="display: flex; align-items: center; gap: 8px"><span class="label">Tahun</span>
+<div style="display: flex"><sc-for list="{{tombolTahun}}" as="b" hint-placeholder-count="2"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for></div></div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="label">Harga</span>
+<div style="display: flex"><sc-for list="{{tombolHarga}}" as="b" hint-placeholder-count="2"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for></div></div>
+</div>
+</div>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<p class="bagel" style="position: absolute; left: 34px; top: 132px; width: 620px; font-size: 38px; line-height: 1.08">{{jawa}} PDRB Indonesia lahir di Pulau Jawa.</p>
+<p style="position: absolute; left: 34px; top: 222px; width: 560px; font-size: 16px; font-weight: 600; line-height: 1.4">Tinggi tiap provinsi sebanding PDRB-nya. Sorot untuk mengintip, klik untuk mengunci kartu di kanan.</p>
+</sc-if>
+<sc-if value="{{memuat}}" hint-placeholder-val="{{ false }}">
+<p class="bagel" style="position: absolute; left: 380px; top: 420px; font-size: 28px">Mencetak peta…</p>
+</sc-if>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 34px; top: 676px; width: 980px">
+<p class="label" style="margin-bottom: 8px">Lima teratas · klik tiket</p>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px">
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<button class="{{t.cls}}" onClick="{{t.pick}}">
+<span class="bagel" style="font-size: 26px; line-height: 1; color: #FF4F8B">{{t.no}}</span>
+<span style="font-size: 15px; font-weight: 800">{{t.nama}}</span>
+<span style="font-size: 14px; font-weight: 600">{{t.nilai}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="position: absolute; left: 1050px; top: 136px; width: 356px; height: 676px; background: #fff; border: 3px solid #1E1B4B; box-shadow: 9px 9px 0 #FF4F8B; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<span class="label">Provinsi terpilih</span>
+<h2 class="bagel" style="font-size: 36px; line-height: 1">{{k.nama}}</h2>
+<p style="font-size: 34px; font-weight: 800; letter-spacing: -.01em; line-height: 1">{{k.nilai}}</p>
+<div>
+<div class="baris"><span>Peringkat nasional</span><b>{{k.peringkat}}</b></div>
+<div class="baris"><span>Porsi dari 38 provinsi</span><b>{{k.porsi}}</b></div>
+<div class="baris"><span>{{k.ubahLabel}}</span><b>{{k.ubah}}</b></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="label">Komposisi sektor</span>
+<div style="display: flex; height: 22px; border: 2.5px solid #1E1B4B">
+<sc-for list="{{k.irisan}}" as="i" hint-placeholder-count="6"><span class="{{i.cls}}" style="width: {{i.w}}"></span></sc-for>
+</div>
+<sc-for list="{{k.legenda}}" as="i" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span class="{{i.cls}}" style="width: 14px; height: 14px; border: 2px solid #1E1B4B; flex: none"></span><span style="flex: 1">{{i.nama}}</span><b>{{i.porsi}}</b></div>
+</sc-for>
+</div>
+<a class="tombol" href="ProvinsiC.dc.html" style="margin-top: auto">Lihat diorama provinsi
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD83D" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</sc-if>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: #1E1B4B; color: #fff; overflow: hidden; display: flex; align-items: center; font-size: 14px; font-weight: 700">
+<span class="berjalan">Sumber: BPS, PDRB menurut lapangan usaha (miliar rupiah) ✦ 2024 angka sementara ✦ 2025 angka sangat sementara ✦ Tinggi balok sebanding PDRB, warna = kelompok peringkat ✦ Total 38 provinsi {{total}} ✦ Sumber: BPS, PDRB menurut lapangan usaha (miliar rupiah) ✦ 2024 angka sementara ✦ 2025 angka sangat sementara ✦ Tinggi balok sebanding PDRB, warna = kelompok peringkat ✦ Total 38 provinsi {{total}} ✦&#160;</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tinggi":{"editor":"range","default":110,"min":50,"max":180,"step":5,"unit":"px","section":"Peta"},"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/7c48d8b70e97daf4921a210982d64c39';
+const CAM = { a: 0, sq: 0.74, s: 0.98, ox: 36, oy: 335, base: 4 };
+const JAWA = ['DKI Jakarta', 'Jawa Barat', 'Jawa Tengah', 'DI Yogyakarta', 'Jawa Timur', 'Banten'];
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rp = (v) => 'Rp ' + nf1.format(v / 1000) + ' T';
+const pct = (v) => nf1.format(v) + '%';
+const f1 = (v) => v.toFixed(1);
+
+function bangun(d, key, hmax) {
+  const rad = CAM.a * Math.PI / 180, ca = Math.cos(rad), sa = Math.sin(rad);
+  const P = (x, y) => [CAM.ox + CAM.s * (x * ca - y * sa), CAM.oy + CAM.s * CAM.sq * (x * sa + y * ca)];
+  const harga = key.split('_')[1];
+  const vmax = Math.max(...d.provinsi.map((p) => Math.max(p.pdrb['2024_' + harga], p.pdrb['2025_' + harga])));
+  const urut = d.provinsi.slice().sort((a, b) => b.pdrb[key] - a.pdrb[key]).map((p) => p.nama);
+  let bayang = '';
+  const geo = d.provinsi.map((p) => {
+    const h = CAM.base + p.pdrb[key] / vmax * hmax;
+    const rank = urut.indexOf(p.nama);
+    const kl = 4 - Math.floor(rank * 5 / urut.length);
+    let atas = '', kiri = '', kanan = '';
+    p.rings.forEach((rs) => {
+      const r = rs.split(' ').map((t) => { const q = t.split(','); return P(+q[0], +q[1]); });
+      let A = 0;
+      r.forEach((q, i) => { const o = r[(i + 1) % r.length]; A += q[0] * o[1] - o[0] * q[1]; });
+      const sg = A > 0 ? 1 : -1;
+      atas += 'M' + r.map((q) => f1(q[0]) + ',' + f1(q[1] - h)).join('L') + 'Z';
+      bayang += 'M' + r.map((q) => f1(q[0] + 6) + ',' + f1(q[1] + 5)).join('L') + 'Z';
+      r.forEach((q, i) => {
+        const o = r[(i + 1) % r.length], dx = o[0] - q[0], dy = o[1] - q[1];
+        if (-sg * dx <= 0) return; // hanya sisi yang menghadap penonton
+        const quad = 'M' + f1(q[0]) + ',' + f1(q[1]) + 'L' + f1(o[0]) + ',' + f1(o[1]) + 'L' + f1(o[0]) + ',' + f1(o[1] - h) + 'L' + f1(q[0]) + ',' + f1(q[1] - h) + 'Z';
+        if (sg * dy < 0) kiri += quad; else kanan += quad;
+      });
+    });
+    const c = P(p.cx, p.cy);
+    return { p, h, rank, kl, atas, kiri, kanan, gx: c[0], gy: c[1] };
+  });
+  geo.sort((a, b) => a.gy - b.gy);
+  return { geo, bayang, urut };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, tahun: '2025', harga: 'berlaku', hover: null, pilih: 'Bali' };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, key = s.tahun + '_' + s.harga;
+    const hmax = this.props.tinggi ?? 110;
+    const tombolTahun = ['2024', '2025'].map((t) => ({ label: t, cls: s.tahun === t ? 'tg on' : 'tg', klik: () => this.setState({ tahun: t }) }));
+    const tombolHarga = [['berlaku', 'Berlaku'], ['konstan', 'Konstan 2010']].map(([k, l]) => ({ label: l, cls: s.harga === k ? 'tg on' : 'tg', klik: () => this.setState({ harga: k }) }));
+    const dasar = { tombolTahun, tombolHarga, tahun: s.tahun, status: s.tahun === '2024' ? 'angka sementara' : 'angka sangat sementara', siap: !!d, memuat: !d };
+    if (!d) return { ...dasar, provs: [], top5: [], bayang: '', k: { irisan: [], legenda: [] }, total: '', jawa: '' };
+    const ck = key + '|' + hmax;
+    if (this._ck !== ck) { this._ck = ck; this._g = bangun(d, key, hmax); }
+    const { geo, bayang, urut } = this._g;
+    const tot = d.provinsi.reduce((a, p) => a + p.pdrb[key], 0);
+    const jawa = d.provinsi.filter((p) => JAWA.includes(p.nama)).reduce((a, p) => a + p.pdrb[key], 0);
+    const provs = geo.map((g, i) => ({
+      atas: g.atas, kiri: g.kiri, kanan: g.kanan,
+      ka: 'atas a' + g.kl, kk: 'k' + g.kl, kn: 'n' + g.kl,
+      cls: g.p.nama === s.pilih ? 'prov on' : 'prov',
+      delay: (i * 30) + 'ms',
+      enter: () => this.setState({ hover: g.p.nama }),
+      leave: () => this.setState({ hover: null }),
+      pick: () => this.setState({ pilih: g.p.nama }),
+    }));
+    const fg = geo.find((g) => g.p.nama === (s.hover || s.pilih));
+    const fp = fg.p, v = fp.pdrb[key], v24 = fp.pdrb['2024_' + s.harga];
+    const sek = fp.sektor[key].map((x, i) => ({ x, i })).sort((a, b) => b.x - a.x);
+    const lain = sek.slice(4).reduce((a, e) => a + e.x, 0);
+    const iris = sek.slice(0, 4).map((e, j) => ({ cls: 's' + j, nama: d.sektor[e.i].nama, porsi: pct(e.x / v * 100), w: (e.x / v * 100).toFixed(2) + '%' }))
+      .concat([{ cls: 's4', nama: 'Sektor lainnya', porsi: pct(lain / v * 100), w: (lain / v * 100).toFixed(2) + '%' }]);
+    const lift = fp.nama === s.pilih ? 10 : 0;
+    const k = {
+      nama: fp.nama, nilai: rp(v), peringkat: '#' + (fg.rank + 1) + ' / 38', porsi: pct(v / tot * 100),
+      ubah: s.tahun === '2025' ? (v >= v24 ? '+' : '') + pct((v / v24 - 1) * 100) : '—',
+      ubahLabel: s.tahun === '2025' ? (s.harga === 'konstan' ? 'Pertumbuhan riil vs 2024' : 'Kenaikan nominal vs 2024') : 'Pembanding 2023 belum ada',
+      irisan: iris, legenda: iris,
+      px: f1(fg.gx - 4), py: f1(fg.gy - fg.h - lift - 12),
+    };
+    const top5 = urut.slice(0, 5).map((nama, i) => {
+      const g = geo.find((x) => x.p.nama === nama), val = g.p.pdrb[key];
+      return { no: i + 1, nama, nilai: rp(val), cls: nama === s.pilih ? 'tiket on' : 'tiket',
+        nc: nama === fp.nama ? 'sembunyi' : 'nomor', pick: () => this.setState({ pilih: nama }), bx: f1(g.gx), by: f1(g.gy - g.h - 4) };
+    });
+    return { ...dasar, provs, bayang, top5, k, total: rp(tot), jawa: Math.round(jawa / tot * 100) + '%' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>PDRB Indonesia — alur Beranda ke Diorama</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+.lapis{position:absolute;left:0;top:0;width:1440px;height:900px}
+/* provinsi yang diklik tidak pernah hilang: diorama menggambar pulau yang sama tepat di atasnya lalu menerbangkannya.
+   Lapisan peta hanya memudar di belakangnya (masuk) atau muncul lagi setelah pulau mendarat kembali (pulang). */
+.peta-pudar{animation:petaPudar .5s ease .1s both;pointer-events:none}
+@keyframes petaPudar{from{opacity:1}to{opacity:0}}
+.peta-balik{animation:petaBalik .3s ease .9s both;pointer-events:none}
+@keyframes petaBalik{from{opacity:0}to{opacity:1}}
+.tutup{visibility:hidden;pointer-events:none}
+@media (prefers-reduced-motion: reduce){.lapis{animation:none!important}}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #FCFCFB; font-family: 'Nunito', sans-serif; color: #1F1F1F">
+<div class="lapis {{petaCls}}">
+<dc-import name="Beranda7c" on-masuk="{{masuk}}" hint-size="1440px,900px"></dc-import>
+</div>
+<sc-if value="{{adaDio}}" hint-placeholder-val="{{ false }}">
+<div class="lapis">
+<dc-import name="DioramaAdegan" prov="{{prov}}" dari="{{peta}}" fase="{{fase}}" on-kembali="{{kembali}}" hint-size="1440px,900px"></dc-import>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+// fase: beranda → masuk → diorama → kembali → beranda. Gerak hanya CSS keyframes (transform/opacity);
+// timer hanya mengganti fase setelah keyframes selesai (0 ms bila "kurangi gerakan").
+const DURASI = { masuk: 1400, kembali: 1250 };
+const KELAS = {
+  beranda: '', masuk: 'peta-pudar', diorama: 'tutup', kembali: 'peta-balik',
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { fase: 'beranda', prov: 'Jawa Timur', peta: null };
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  ganti(fase, lanjut, extra) {
+    clearTimeout(this._t);
+    this.setState({ fase, ...extra });
+    const diam = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._t = setTimeout(() => this.setState({ fase: lanjut }), diam ? 0 : DURASI[fase]);
+  }
+  renderVals() {
+    const s = this.state;
+    return {
+      petaCls: KELAS[s.fase], fase: s.fase, prov: s.prov, peta: s.peta,
+      adaDio: s.fase !== 'beranda',
+      masuk: (nama, peta) => { if (this.state.fase === 'beranda') this.ganti('masuk', 'diorama', { prov: nama, peta }); },
+      kembali: () => { if (this.state.fase === 'diorama') this.ganti('kembali', 'beranda'); },
+    };
+  }
+}
+</script>
+</body>
+</html>

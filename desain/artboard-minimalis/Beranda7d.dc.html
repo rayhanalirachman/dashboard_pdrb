@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>PDRB Indonesia — Beranda 7d lensa pertumbuhan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+.akar{--bg:#FCFCFB;--kartu:#F4F3F1;--ink:#1F1F1F;--redam:#5A5A5A;--aksen:#C2441F;--tint:#FBE9E2}
+.akar *{box-sizing:border-box}
+.akar h1,.akar h2,.akar p{margin:0}
+.kartu{background:var(--kartu);border-radius:24px}
+.pill{display:inline-flex;align-items:center;background:var(--tint);border-radius:999px;padding:5px 14px;font:800 13px 'Nunito',sans-serif;color:var(--ink)}
+.kecil{font:700 12.5px 'Nunito',sans-serif;color:var(--redam)}
+.lensa{display:flex;background:#FFFFFF;border-radius:999px;padding:3px;gap:2px}
+.lensa button{height:44px;padding:0 16px;border:0;border-radius:999px;background:none;color:var(--ink);font:800 14px 'Nunito',sans-serif;cursor:pointer;white-space:nowrap}
+.lensa button:hover{background:#ECEBE8}
+.lensa button.on{background:var(--ink);color:#fff}
+.legenda{display:flex;gap:10px;flex-wrap:wrap;font:700 12px 'Nunito',sans-serif;color:var(--redam)}
+.legenda span{display:flex;align-items:center;gap:5px}
+.legenda i{display:block;width:14px;height:10px;border-radius:3px}
+.prov{cursor:pointer;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.prov:hover{transform:translateY(-7px)}
+.prov.on{animation:mengapung 3s ease-in-out infinite}
+@keyframes mengapung{0%,100%{transform:translateY(-9px)}50%{transform:translateY(-15px)}}
+.atas{stroke:var(--bg);stroke-width:.9;stroke-linejoin:round}
+.prov.on .atas{stroke:var(--ink);stroke-width:1.6}
+.warna{transition:fill .5s ease}
+.masuk{animation:muncul .7s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes muncul{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.nomor{position:absolute;transform:translate(-50%,-100%);width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font:800 12.5px/24px 'Nunito',sans-serif;text-align:center;pointer-events:none}
+.sembunyi{display:none}
+.pin{position:absolute;transform:translate(-50%,-100%);pointer-events:none;background:var(--ink);color:#fff;border-radius:999px;padding:5px 13px;font:800 13.5px 'Nunito',sans-serif;white-space:nowrap;animation:angguk 3s ease-in-out infinite}
+@keyframes angguk{0%,100%{margin-top:0}50%{margin-top:-6px}}
+.ekstrem{position:absolute;transform:translate(-50%,-100%);pointer-events:none;border-radius:10px;padding:3px 9px;font:900 12.5px 'Nunito',sans-serif;white-space:nowrap;background:#FFFFFF;box-shadow:0 0 0 1.5px currentColor}
+.baris{display:grid;grid-template-columns:28px 1fr auto 66px;align-items:center;column-gap:10px;row-gap:4px;width:100%;min-height:42px;background:none;border:0;border-radius:14px;padding:5px 8px;font:700 15px 'Nunito',sans-serif;color:var(--ink);text-align:left;cursor:pointer}
+.baris:hover{background:#ECEBE8}
+.baris.on{background:var(--tint)}
+.bulat{width:26px;height:26px;border-radius:50%;background:#FFFFFF;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;grid-row:span 2}
+.baris.on .bulat{background:var(--aksen);color:#fff}
+.batang{grid-column:2 / 4;height:5px;border-radius:5px;background:#E6E5E2;overflow:hidden}
+.batang i{display:block;height:100%;border-radius:5px;background:#888887}
+.baris.on .batang i{background:var(--aksen)}
+.tumbuh{grid-row:span 2;justify-self:end;font:900 12.5px 'Nunito',sans-serif;background:#FFFFFF;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.turun{color:var(--aksen)}
+.skala{position:relative;height:8px;border-radius:8px;background:#E6E5E2;margin:14px 0 6px}
+.skala .nol,.skala .nas{position:absolute;top:-5px;width:2px;height:18px;background:#888887}
+.skala .nas{background:var(--ink)}
+.skala .titik{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;border:3px solid #FFFFFF;transform:translate(-50%,-50%);box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+a.tombol{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:999px;background:var(--ink);color:#fff;font:800 15.5px 'Nunito',sans-serif;text-decoration:none}
+a.tombol:hover{background:var(--aksen)}
+@media (prefers-reduced-motion: reduce){.akar *{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="akar" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #FCFCFB; font-family: 'Nunito', sans-serif; color: #1F1F1F">
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Peta isometrik 38 provinsi Indonesia; tinggi sebanding PDRB, warna menurut lensa yang dipilih">
+<sc-for list="{{provs}}" as="p" hint-placeholder-count="38">
+<g class="masuk" style="animation-delay: {{p.delay}}">
+<g class="{{p.cls}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onClick="{{p.pick}}">
+<path class="warna" d="{{p.kiri}}" style="fill: {{p.wk}}"></path>
+<path class="warna" d="{{p.kanan}}" style="fill: {{p.wn}}"></path>
+<path class="atas warna" d="{{p.atas}}" style="fill: {{p.wa}}"></path>
+</g>
+</g>
+</sc-for>
+</svg>
+
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<div class="{{t.nc}}" style="left: {{t.bx}}px; top: {{t.by}}px">{{t.no}}</div>
+</sc-for>
+<sc-for list="{{ekstrem}}" as="e" hint-placeholder-count="2">
+<div class="ekstrem" style="left: {{e.x}}px; top: {{e.y}}px; color: {{e.warna}}">{{e.teks}}</div>
+</sc-for>
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="pin" style="left: {{k.px}}px; top: {{k.py}}px">{{k.nama}} · {{k.tumbuh}}</div>
+</sc-if>
+
+<div style="position: absolute; left: 40px; top: 34px; width: 640px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<span class="pill">PDRB 2025 · angka sangat sementara</span>
+<h1 style="font-size: 50px; font-weight: 900; line-height: 1.02; letter-spacing: -.015em">Indonesia, ditumpuk<br>menurut PDRB</h1>
+<p style="font-size: 16px; font-weight: 600; color: #474747; max-width: 540px">Tinggi pulau = besar ekonomi. Warna bisa diganti: besar PDRB, atau laju pertumbuhannya.</p>
+</div>
+
+<div class="kartu" style="position: absolute; right: 40px; top: 36px; padding: 12px 14px 12px 18px; display: flex; flex-direction: column; gap: 10px; width: 520px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="kecil" style="white-space: nowrap">2025 · harga konstan 2010</span>
+<span style="font-size: 15px; font-weight: 800">Warna peta</span>
+</div>
+<div class="lensa">
+<sc-for list="{{lensa}}" as="b" hint-placeholder-count="2"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for>
+</div>
+</div>
+<div class="legenda">
+<sc-for list="{{legenda}}" as="l" hint-placeholder-count="5"><span><i style="background: {{l.warna}}"></i>{{l.label}}</span></sc-for>
+</div>
+</div>
+
+<sc-if value="{{memuat}}" hint-placeholder-val="{{ false }}">
+<p class="kecil" style="position: absolute; left: 640px; top: 440px">Memuat data…</p>
+</sc-if>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="kartu" style="position: absolute; left: 40px; bottom: 40px; width: 470px; padding: 16px 12px 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 8px 6px">
+<h2 style="font-size: 20px; font-weight: 900">{{judulTop}}</h2>
+<span class="kecil">{{subTop}}</span>
+</div>
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<button class="{{t.cls}}" onClick="{{t.pick}}">
+<span class="bulat">{{t.no}}</span>
+<span>{{t.nama}}</span>
+<span style="font-weight: 900; font-size: 14px">{{t.nilai}}</span>
+<span class="{{t.gcls}}">{{t.tumbuh}}</span>
+<span class="batang"><i style="width: {{t.lebar}}"></i></span>
+</button>
+</sc-for>
+<p class="kecil" style="padding: 6px 8px 2px">{{catatanTop}}</p>
+</div>
+
+<div class="kartu" style="position: absolute; right: 40px; bottom: 40px; width: 400px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div>
+<span class="kecil">Provinsi terpilih</span>
+<h2 style="font-size: 30px; font-weight: 900; line-height: 1.05; margin-top: 4px">{{k.nama}}</h2>
+<p style="font-size: 15px; font-weight: 700; color: #474747; margin-top: 2px"><b style="font-size: 26px; font-weight: 900; color: #C2441F">{{k.nilai}}</b> · #{{k.peringkat}} dari 38 · porsi {{k.porsi}}</p>
+</div>
+<div style="background: #FFFFFF; border-radius: 16px; padding: 12px 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span class="kecil">Pertumbuhan riil 2024→2025</span>
+<b class="{{k.gcls}}" style="font-size: 26px; font-weight: 900">{{k.tumbuh}}</b>
+</div>
+<div class="skala"><span class="nol" style="left: 33.3%"></span><span class="nas" style="left: {{nasPos}}"></span><span class="titik" style="left: {{k.gpos}}; background: {{k.gwarna}}"></span></div>
+<div class="kecil" style="position: relative; height: 16px; font-size: 11.5px"><span style="position: absolute; left: 0">−5%</span><span style="position: absolute; left: 33.3%; transform: translateX(-50%)">0</span><span style="position: absolute; left: {{nasPos}}; transform: translateX(-50%); color: #1F1F1F">nasional {{nasional}}</span><span style="position: absolute; right: 0">+10%</span></div>
+<p style="font-size: 13px; font-weight: 700; color: #474747; margin-top: 6px">{{k.gteks}}</p>
+</div>
+<a class="tombol" href="DioramaKota.dc.html">Masuk ke diorama provinsi
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</sc-if>
+
+<p style="position: absolute; left: 530px; bottom: 44px; width: 440px; font-size: 12px; font-weight: 600; line-height: 1.5; color: #5A5A5A; text-align: center">Sumber: BPS, PDRB harga konstan 2010. Pertumbuhan riil = PDRB 2025 dibanding 2024 (angka sementara dan sangat sementara). Tinggi pulau sebanding PDRB.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tinggi":{"editor":"range","default":115,"min":50,"max":180,"step":5,"unit":"px","section":"Peta"},"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/a6941a19a2c51e6fab826cc5673b9c48';
+const KEY = '2025_konstan', LALU = '2024_konstan';
+const CAM = { a: -6, sq: 0.8, s: 1.2, ox: 96, oy: 330, base: 4 };
+const SKALA = [-5, 10];   // skala kartu & batang; di luar ini ditandai
+const EKSTREM = 10;       // |pertumbuhan| >= 10% diberi label di peta
+const LEVEL = ['#E9E9E8', '#D4D4D3', '#B5B5B4', '#888887', '#4B4B4A']; // kuintil PDRB, kecil -> besar
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rp = (v) => 'Rp ' + nf1.format(v / 1000) + ' T';
+const pct = (v) => nf1.format(v) + '%';
+const sgn = (g) => (g >= 0 ? '+' : '−') + pct(Math.abs(g));
+const f1 = (v) => v.toFixed(1);
+const posisi = (g) => ((Math.min(SKALA[1], Math.max(SKALA[0], g)) - SKALA[0]) / (SKALA[1] - SKALA[0]) * 100).toFixed(1) + '%';
+const gelap = (h, f) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(h.slice(i, i + 2), 16) * (1 - f)).toString(16).padStart(2, '0')).join('');
+// kelas pertumbuhan relatif terhadap angka nasional
+const kelasG = (g, nas) => g < 0 ? '#E4572E' : g < 4 ? '#E9E9E8' : g < nas ? '#C4C4C3' : g < 6 ? '#8C8C8B' : '#4B4B4A';
+
+function bangun(d, hmax) {
+  const rad = CAM.a * Math.PI / 180, ca = Math.cos(rad), sa = Math.sin(rad);
+  const P = (x, y) => [CAM.ox + CAM.s * (x * ca - y * sa), CAM.oy + CAM.s * CAM.sq * (x * sa + y * ca)];
+  const vmax = Math.max(...d.provinsi.map((p) => p.pdrb[KEY]));
+  const urut = d.provinsi.slice().sort((a, b) => b.pdrb[KEY] - a.pdrb[KEY]).map((p) => p.nama);
+  const gr = (p) => (p.pdrb[KEY] / p.pdrb[LALU] - 1) * 100;
+  const urutG = d.provinsi.slice().sort((a, b) => gr(b) - gr(a)).map((p) => p.nama);
+  const nas = (d.provinsi.reduce((a, p) => a + p.pdrb[KEY], 0) / d.provinsi.reduce((a, p) => a + p.pdrb[LALU], 0) - 1) * 100;
+  const geo = d.provinsi.map((p) => {
+    const h = CAM.base + p.pdrb[KEY] / vmax * hmax;
+    const rank = urut.indexOf(p.nama), g = gr(p);
+    let atas = '', kiri = '', kanan = '';
+    p.rings.forEach((rs) => {
+      const r = rs.split(' ').map((t) => { const q = t.split(','); return P(+q[0], +q[1]); });
+      let A = 0;
+      r.forEach((q, i) => { const o = r[(i + 1) % r.length]; A += q[0] * o[1] - o[0] * q[1]; });
+      const sg = A > 0 ? 1 : -1;
+      atas += 'M' + r.map((q) => f1(q[0]) + ',' + f1(q[1] - h)).join('L') + 'Z';
+      r.forEach((q, i) => {
+        const o = r[(i + 1) % r.length], dx = o[0] - q[0], dy = o[1] - q[1];
+        if (-sg * dx <= 0) return; // hanya sisi yang menghadap penonton
+        const quad = 'M' + f1(q[0]) + ',' + f1(q[1]) + 'L' + f1(o[0]) + ',' + f1(o[1]) + 'L' + f1(o[0]) + ',' + f1(o[1] - h) + 'L' + f1(q[0]) + ',' + f1(q[1] - h) + 'Z';
+        if (sg * dy < 0) kiri += quad; else kanan += quad;
+      });
+    });
+    const c = P(p.cx, p.cy);
+    return { p, h, rank, g, rankG: urutG.indexOf(p.nama), wl: LEVEL[4 - Math.floor(rank * 5 / urut.length)], wg: kelasG(g, nas),
+      atas, kiri, kanan, gx: c[0], gy: c[1] };
+  });
+  geo.sort((a, b) => a.gy - b.gy);
+  return { geo, urut, urutG, nas };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, hover: null, pilih: 'Jawa Timur', lensa: 'tumbuh' };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, hmax = this.props.tinggi ?? 115, L = s.lensa;
+    const lensa = [['pdrb', 'Besar PDRB'], ['tumbuh', 'Pertumbuhan']].map(([id, label]) => ({ label, cls: L === id ? 'on' : '', klik: () => this.setState({ lensa: id }) }));
+    if (!d) return { siap: false, memuat: true, lensa, legenda: [], provs: [], top5: [], ekstrem: [], k: {}, nasional: '', nasPos: '0%', judulTop: '', subTop: '', catatanTop: '' };
+    if (this._h !== hmax) { this._h = hmax; this._g = bangun(d, hmax); }
+    const { geo, urut, urutG, nas } = this._g;
+    const tot = d.provinsi.reduce((a, p) => a + p.pdrb[KEY], 0);
+    const legenda = L === 'tumbuh'
+      ? [['#E4572E', 'menyusut'], ['#E9E9E8', '0–4%'], ['#C4C4C3', '4% – nasional'], ['#8C8C8B', 'nasional – 6%'], ['#4B4B4A', '≥ 6%']].map(([warna, label]) => ({ warna, label }))
+      : [['#E9E9E8', 'terkecil'], ['#D4D4D3', ''], ['#B5B5B4', ''], ['#888887', ''], ['#4B4B4A', 'terbesar']].map(([warna, label]) => ({ warna, label }));
+    const provs = geo.map((g, i) => {
+      const on = g.p.nama === s.pilih;
+      const w = on ? (L === 'pdrb' ? '#E4572E' : '#FFFFFF') : (L === 'pdrb' ? g.wl : g.wg);
+      const sisi = on && L === 'pdrb' ? '#C2441F' : on ? '#E2E1DE' : w;
+      return { atas: g.atas, kiri: g.kiri, kanan: g.kanan, wa: w, wk: gelap(sisi, 0.08), wn: gelap(sisi, 0.18),
+        cls: on ? 'prov on' : 'prov', delay: (i * 35) + 'ms',
+        enter: () => this.setState({ hover: g.p.nama }), leave: () => this.setState({ hover: null }), pick: () => this.setState({ pilih: g.p.nama }) };
+    });
+    const fg = geo.find((g) => g.p.nama === (s.hover || s.pilih));
+    const fp = fg.p, v = fp.pdrb[KEY], g = fg.g;
+    const lift = fp.nama === s.pilih ? 12 : 0;
+    const luar = g < SKALA[0] || g > SKALA[1];
+    const banding = g < 0 ? 'Ekonominya menyusut riil.' : g >= nas ? 'Lebih cepat dari rata-rata 38 provinsi.' : 'Lebih lambat dari rata-rata 38 provinsi.';
+    const k = {
+      nama: fp.nama, nilai: rp(v), peringkat: fg.rank + 1, porsi: pct(v / tot * 100),
+      tumbuh: sgn(g), gcls: g < 0 ? 'turun' : '', gpos: posisi(g), gwarna: g < 0 ? '#C2441F' : '#1F1F1F',
+      gteks: 'Laju #' + (fg.rankG + 1) + ' dari 38. ' + banding + (luar ? ' Nilainya di luar skala −5 sampai +10%.' : ''),
+      px: f1(fg.gx), py: f1(fg.gy - fg.h - lift - 12),
+    };
+    const daftar = (L === 'tumbuh' ? urutG : urut).slice(0, 5);
+    const vTop = geo.find((x) => x.rank === 0).p.pdrb[KEY];
+    const top5 = daftar.map((nama, i) => {
+      const x = geo.find((y) => y.p.nama === nama), val = x.p.pdrb[KEY];
+      const lebar = L === 'tumbuh' ? Math.min(100, x.g / SKALA[1] * 100) : val / vTop * 100;
+      return { no: i + 1, nama, nilai: rp(val), lebar: lebar.toFixed(1) + '%', cls: nama === s.pilih ? 'baris on' : 'baris',
+        tumbuh: (x.g >= 0 ? '▲ ' : '▼ ') + pct(Math.abs(x.g)), gcls: x.g < 0 ? 'tumbuh turun' : 'tumbuh',
+        nc: nama === fp.nama ? 'sembunyi' : 'nomor', pick: () => this.setState({ pilih: nama }), bx: f1(x.gx), by: f1(x.gy - x.h - 4) };
+    });
+    const lambat = geo.find((x) => x.p.nama === urutG[urutG.length - 1]);
+    const ekstrem = L === 'tumbuh' ? geo.filter((x) => Math.abs(x.g) >= EKSTREM && x.p.nama !== fp.nama)
+      .map((x) => ({ teks: x.p.nama + ' ' + sgn(x.g), warna: x.g < 0 ? '#C2441F' : '#1F1F1F', x: f1(x.gx), y: f1(x.gy - x.h - 34) })) : [];
+    return { siap: true, memuat: false, lensa, legenda, provs, top5, ekstrem, k, nasional: sgn(nas), nasPos: posisi(nas),
+      judulTop: L === 'tumbuh' ? 'Tumbuh tercepat' : 'Top 5 provinsi', subTop: L === 'tumbuh' ? 'PDRB · tumbuh riil (batang s.d. 10%)' : 'PDRB · tumbuh riil',
+      catatanTop: L === 'tumbuh' ? 'Paling lambat: ' + lambat.p.nama + ' ' + sgn(lambat.g) + ' · rata-rata 38 provinsi ' + sgn(nas) : 'Rata-rata pertumbuhan 38 provinsi ' + sgn(nas) };
+  }
+}
+</script>
+</body>
+</html>

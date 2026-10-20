@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>PDRB Indonesia — Malam Lampion</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=DM+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+.akar *{box-sizing:border-box}
+.akar h1,.akar h2,.akar p{margin:0}
+.mono{font-family:'DM Mono',monospace}
+.label{font:500 12px 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#C9B8E8}
+.seg{display:flex;background:#1D1530;border:1px solid #4A3A66;border-radius:14px;padding:4px;gap:4px}
+.seg button{flex:1;height:44px;border:0;border-radius:10px;background:none;color:#E6DAF7;font:700 15px 'Bricolage Grotesque',sans-serif;cursor:pointer}
+.seg button:hover{background:#2F2449}
+.seg button.on{background:#FFD36E;color:#1D1530}
+.prov{cursor:pointer;transition:transform .35s cubic-bezier(.3,1.5,.5,1),filter .3s}
+.prov:hover{transform:translateY(-7px);filter:brightness(1.15)}
+.prov.on{transform:translateY(-12px);filter:drop-shadow(0 0 14px rgba(255,211,110,.75))}
+.atas{stroke:#1D1530;stroke-opacity:.55;stroke-width:.8;stroke-linejoin:round}
+.prov.on .atas{stroke:#FFF4E6;stroke-opacity:1;stroke-width:2}
+.a0{fill:#5B4A86}.a1{fill:#9A5A9E}.a2{fill:#E0697E}.a3{fill:#F79A5A}.a4{fill:#FFD36E}
+.k0{fill:#4A3B70}.k1{fill:#7E4783}.k2{fill:#BF5268}.k3{fill:#D97C45}.k4{fill:#E0B04F}
+.n0{fill:#382B57}.n1{fill:#5F3463}.n2{fill:#963E52}.n3{fill:#A85E33}.n4{fill:#B58A3B}
+.masuk{animation:tumbuh .9s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes tumbuh{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+.suar{fill:none;stroke:#FFD36E;stroke-width:2.5;animation:suar 2s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes suar{from{transform:scale(.3);opacity:1}to{transform:scale(1.6);opacity:0}}
+.bintang{position:absolute;width:4px;height:4px;border-radius:50%;background:#FFF4E6;animation:kelip 3s ease-in-out infinite}
+@keyframes kelip{0%,100%{opacity:.2}50%{opacity:1}}
+.nomor{position:absolute;transform:translate(-50%,-100%);min-width:24px;height:24px;border-radius:8px;background:#FFD36E;color:#1D1530;font:500 13px/24px 'DM Mono',monospace;text-align:center;pointer-events:none}
+.sembunyi{display:none}
+.pin{position:absolute;transform:translate(-50%,-100%);pointer-events:none;background:#FFF4E6;color:#1D1530;border-radius:10px;padding:5px 12px;font:800 15px 'Bricolage Grotesque',sans-serif;white-space:nowrap;box-shadow:0 0 24px rgba(255,211,110,.6)}
+.baris{display:grid;grid-template-columns:22px 1fr auto;column-gap:10px;row-gap:6px;align-items:center;width:100%;background:none;border:0;border-radius:12px;padding:8px 10px;color:#FFF4E6;font:700 15px 'Bricolage Grotesque',sans-serif;text-align:left;cursor:pointer;min-height:44px}
+.baris:hover,.baris.on{background:#33274F}
+.baris .bar{grid-column:2 / 4;height:6px;border-radius:6px;background:#3A2D57;overflow:hidden}
+.baris .bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#E0697E,#FFD36E)}
+a.tombol{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:14px;background:#FFD36E;color:#1D1530;font:800 16px 'Bricolage Grotesque',sans-serif;text-decoration:none}
+a.tombol:hover{background:#FFE29A}
+.stat{border:1px solid #4A3A66;border-radius:12px;padding:8px 10px}
+.stat b{display:block;font:500 18px 'DM Mono',monospace;color:#FFF4E6;margin-top:2px}
+@media (prefers-reduced-motion: reduce){.akar *{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="akar" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background-color: #1D1530; background-image: radial-gradient(#3A2D57 1.2px, transparent 1.6px); background-size: 22px 22px; font-family: 'Bricolage Grotesque', sans-serif; color: #FFF4E6">
+<div class="bintang" style="left: 520px; top: 120px"></div>
+<div class="bintang" style="left: 760px; top: 70px; animation-delay: .8s"></div>
+<div class="bintang" style="left: 980px; top: 150px; animation-delay: 1.6s"></div>
+<div class="bintang" style="left: 1240px; top: 96px; animation-delay: 2.2s"></div>
+<div class="bintang" style="left: 640px; top: 760px; animation-delay: 1.1s"></div>
+<div class="bintang" style="left: 880px; top: 820px; animation-delay: .4s"></div>
+
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Peta isometrik 38 provinsi Indonesia, tinggi sebanding PDRB">
+<path d="{{bayang}}" fill="#000" fill-opacity="0.28"></path>
+<sc-for list="{{provs}}" as="p" hint-placeholder-count="38">
+<g class="masuk" style="animation-delay: {{p.delay}}">
+<g class="{{p.cls}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onClick="{{p.pick}}">
+<path class="{{p.kk}}" d="{{p.kiri}}"></path>
+<path class="{{p.kn}}" d="{{p.kanan}}"></path>
+<path class="{{p.ka}}" d="{{p.atas}}"></path>
+</g>
+</g>
+</sc-for>
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<ellipse class="suar" cx="{{k.px}}" cy="{{k.gy}}" rx="26" ry="11"></ellipse>
+</sc-if>
+</svg>
+
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<div class="{{t.nc}}" style="left: {{t.bx}}px; top: {{t.by}}px">{{t.no}}</div>
+</sc-for>
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="pin" style="left: {{k.px}}px; top: {{k.py}}px">{{k.nama}}</div>
+</sc-if>
+
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 380px; background: #261C3D; border-right: 1px solid #3E3160; padding: 32px 28px 24px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="label">PDRB · {{status}}</span>
+<h1 style="font-size: 40px; line-height: 1; font-weight: 800; letter-spacing: -.02em">Lampu ekonomi 38 provinsi</h1>
+<p style="font-size: 15px; line-height: 1.45; color: #DCCFF0">Tiap provinsi menyala setinggi PDRB-nya. Arahkan kursor untuk mengintip, klik untuk mengunci.</p>
+</div>
+<div>
+<span class="label">Total 38 provinsi</span>
+<p class="mono" style="font-size: 38px; color: #FFD36E; letter-spacing: -.02em; margin-top: 2px">{{total}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="label">Tahun</span>
+<div class="seg"><sc-for list="{{tombolTahun}}" as="b" hint-placeholder-count="2"><button class="{{b.on}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for></div>
+<span class="label" style="margin-top: 4px">Jenis harga</span>
+<div class="seg"><sc-for list="{{tombolHarga}}" as="b" hint-placeholder-count="2"><button class="{{b.on}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="label" style="margin-bottom: 4px">5 lampu paling terang</span>
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<button class="{{t.cls}}" onClick="{{t.pick}}">
+<span class="mono" style="color: #FFD36E; font-size: 14px">{{t.no}}</span>
+<span>{{t.nama}}</span>
+<span class="mono" style="font-size: 14px">{{t.nilai}}</span>
+<span class="bar"><i style="width: {{t.lebar}}"></i></span>
+</button>
+</sc-for>
+</div>
+<p style="margin-top: auto; font-size: 12px; line-height: 1.5; color: #C9B8E8">Sumber: BPS, PDRB menurut lapangan usaha, miliar rupiah. 2024 angka sementara, 2025 angka sangat sementara. Tinggi balok sebanding PDRB.</p>
+</div>
+
+<sc-if value="{{memuat}}" hint-placeholder-val="{{ false }}">
+<p class="mono" style="position: absolute; left: 760px; top: 430px; font-size: 18px; color: #FFD36E">Menyalakan peta…</p>
+</sc-if>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; right: 32px; bottom: 32px; width: 380px; background: rgba(38,28,61,.94); border: 1px solid #4A3A66; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.45)">
+<span class="label">Provinsi terpilih</span>
+<div>
+<h2 style="font-size: 30px; font-weight: 800; line-height: 1.05">{{k.nama}}</h2>
+<p class="mono" style="font-size: 30px; color: #FFD36E; margin-top: 4px">{{k.nilai}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div class="stat"><span class="label">Peringkat</span><b>{{k.peringkat}}</b></div>
+<div class="stat"><span class="label">Porsi</span><b>{{k.porsi}}</b></div>
+<div class="stat"><span class="label">{{k.ubahLabel}}</span><b>{{k.ubah}}</b></div>
+</div>
+<p style="font-size: 14px; color: #DCCFF0">Sektor terbesar: <b style="color: #FFF4E6">{{k.sektor}}</b> · {{k.sektorPorsi}}</p>
+<a class="tombol" href="ProvinsiB.dc.html">Buka diorama provinsi
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D1530" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tinggi":{"editor":"range","default":130,"min":50,"max":200,"step":5,"unit":"px","section":"Peta"},"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/7c48d8b70e97daf4921a210982d64c39';
+const CAM = { a: -14, sq: 0.86, s: 0.96, ox: 404, oy: 385, base: 3 };
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rp = (v) => 'Rp ' + nf1.format(v / 1000) + ' T';
+const pct = (v) => nf1.format(v) + '%';
+const f1 = (v) => v.toFixed(1);
+
+function bangun(d, key, hmax) {
+  const rad = CAM.a * Math.PI / 180, ca = Math.cos(rad), sa = Math.sin(rad);
+  const P = (x, y) => [CAM.ox + CAM.s * (x * ca - y * sa), CAM.oy + CAM.s * CAM.sq * (x * sa + y * ca)];
+  const harga = key.split('_')[1];
+  const vmax = Math.max(...d.provinsi.map((p) => Math.max(p.pdrb['2024_' + harga], p.pdrb['2025_' + harga])));
+  const urut = d.provinsi.slice().sort((a, b) => b.pdrb[key] - a.pdrb[key]).map((p) => p.nama);
+  let bayang = '';
+  const geo = d.provinsi.map((p) => {
+    const h = CAM.base + p.pdrb[key] / vmax * hmax;
+    const rank = urut.indexOf(p.nama);
+    const kl = 4 - Math.floor(rank * 5 / urut.length);
+    let atas = '', kiri = '', kanan = '';
+    p.rings.forEach((rs) => {
+      const r = rs.split(' ').map((t) => { const q = t.split(','); return P(+q[0], +q[1]); });
+      let A = 0;
+      r.forEach((q, i) => { const o = r[(i + 1) % r.length]; A += q[0] * o[1] - o[0] * q[1]; });
+      const sg = A > 0 ? 1 : -1;
+      atas += 'M' + r.map((q) => f1(q[0]) + ',' + f1(q[1] - h)).join('L') + 'Z';
+      bayang += 'M' + r.map((q) => f1(q[0] + 5) + ',' + f1(q[1] + 6)).join('L') + 'Z';
+      r.forEach((q, i) => {
+        const o = r[(i + 1) % r.length], dx = o[0] - q[0], dy = o[1] - q[1];
+        if (-sg * dx <= 0) return; // hanya sisi yang menghadap penonton
+        const quad = 'M' + f1(q[0]) + ',' + f1(q[1]) + 'L' + f1(o[0]) + ',' + f1(o[1]) + 'L' + f1(o[0]) + ',' + f1(o[1] - h) + 'L' + f1(q[0]) + ',' + f1(q[1] - h) + 'Z';
+        if (sg * dy < 0) kiri += quad; else kanan += quad;
+      });
+    });
+    const c = P(p.cx, p.cy);
+    return { p, h, rank, kl, atas, kiri, kanan, gx: c[0], gy: c[1] };
+  });
+  geo.sort((a, b) => a.gy - b.gy);
+  return { geo, bayang, urut };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, tahun: '2025', harga: 'berlaku', hover: null, pilih: 'Kalimantan Timur' };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, key = s.tahun + '_' + s.harga;
+    const hmax = this.props.tinggi ?? 130;
+    const tombolTahun = ['2024', '2025'].map((t) => ({ label: t, on: s.tahun === t ? 'on' : '', klik: () => this.setState({ tahun: t }) }));
+    const tombolHarga = [['berlaku', 'Berlaku'], ['konstan', 'Konstan 2010']].map(([k, l]) => ({ label: l, on: s.harga === k ? 'on' : '', klik: () => this.setState({ harga: k }) }));
+    const dasar = { tombolTahun, tombolHarga, status: s.tahun + ' · ' + (s.tahun === '2024' ? 'angka sementara' : 'angka sangat sementara'), siap: !!d, memuat: !d };
+    if (!d) return { ...dasar, provs: [], top5: [], bayang: '', k: {}, total: '…' };
+    const ck = key + '|' + hmax;
+    if (this._ck !== ck) { this._ck = ck; this._g = bangun(d, key, hmax); }
+    const { geo, bayang, urut } = this._g;
+    const tot = d.provinsi.reduce((a, p) => a + p.pdrb[key], 0);
+    const provs = geo.map((g, i) => ({
+      atas: g.atas, kiri: g.kiri, kanan: g.kanan,
+      ka: 'atas a' + g.kl, kk: 'k' + g.kl, kn: 'n' + g.kl,
+      cls: g.p.nama === s.pilih ? 'prov on' : 'prov',
+      delay: (i * 35) + 'ms',
+      enter: () => this.setState({ hover: g.p.nama }),
+      leave: () => this.setState({ hover: null }),
+      pick: () => this.setState({ pilih: g.p.nama }),
+    }));
+    const fg = geo.find((g) => g.p.nama === (s.hover || s.pilih));
+    const fp = fg.p, v = fp.pdrb[key], v24 = fp.pdrb['2024_' + s.harga];
+    const sek = fp.sektor[key], si = sek.indexOf(Math.max(...sek));
+    const lift = fp.nama === s.pilih ? 12 : 0;
+    const k = {
+      nama: fp.nama, nilai: rp(v), peringkat: '#' + (fg.rank + 1), porsi: pct(v / tot * 100),
+      ubah: s.tahun === '2025' ? (v >= v24 ? '+' : '') + pct((v / v24 - 1) * 100) : '—',
+      ubahLabel: s.tahun === '2025' ? (s.harga === 'konstan' ? 'Riil' : 'Nominal') : 'vs 2023',
+      sektor: d.sektor[si].nama, sektorPorsi: pct(sek[si] / v * 100),
+      px: f1(fg.gx), py: f1(fg.gy - fg.h - lift - 14), gy: f1(fg.gy - fg.h - lift),
+    };
+    const vTop = geo.find((g) => g.rank === 0).p.pdrb[key];
+    const top5 = urut.slice(0, 5).map((nama, i) => {
+      const g = geo.find((x) => x.p.nama === nama), val = g.p.pdrb[key];
+      return { no: i + 1, nama, nilai: nf1.format(val / 1000) + ' T', lebar: (val / vTop * 100).toFixed(1) + '%', cls: nama === s.pilih ? 'baris on' : 'baris',
+        nc: nama === fp.nama ? 'sembunyi' : 'nomor', pick: () => this.setState({ pilih: nama }), bx: f1(g.gx), by: f1(g.gy - g.h - 4) };
+    });
+    return { ...dasar, provs, bayang, top5, k, total: rp(tot) };
+  }
+}
+</script>
+</body>
+</html>

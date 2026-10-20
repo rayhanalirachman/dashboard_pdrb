@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Diorama — Mesin Roda Gigi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+.dio{--bg:#FCFCFB;--kartu:#F4F3F1;--ink:#1F1F1F;--redam:#5A5A5A;--bata:#C2441F;--bata2:#E4572E;--tint:#FBE9E2}
+.dio *{box-sizing:border-box}
+.dio h1,.dio h2,.dio p{margin:0}
+.kartu{background:var(--kartu);border-radius:24px}
+.pill{display:inline-flex;align-items:center;background:var(--tint);border-radius:999px;padding:5px 14px;font:800 13px 'Nunito',sans-serif;color:var(--ink);align-self:flex-start}
+.chip{background:var(--kartu);border-radius:999px;padding:6px 12px;font:800 14px 'Nunito',sans-serif;white-space:nowrap}
+.kecil{font:700 12.5px 'Nunito',sans-serif;color:var(--redam)}
+.kembali{border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px 0 12px;border-radius:999px;background:var(--kartu);color:var(--ink);font:800 14px 'Nunito',sans-serif;text-decoration:none;align-self:flex-start}
+.kembali:hover{background:var(--tint)}
+.lensa{display:flex;background:var(--kartu);border-radius:999px;padding:3px;gap:2px}
+.lensa button{height:44px;padding:0 12px;border:0;border-radius:999px;background:none;color:var(--ink);font:800 13.5px 'Nunito',sans-serif;cursor:pointer;white-space:nowrap}
+.lensa button:hover{background:#ECEBE8}
+.lensa button.on{background:var(--ink);color:#fff}
+.legenda{display:flex;gap:10px;flex-wrap:wrap;font:700 12px 'Nunito',sans-serif;color:var(--redam)}
+.legenda span{display:flex;align-items:center;gap:5px}
+.legenda i{display:block;width:14px;height:10px;border-radius:3px}
+.brs{display:grid;grid-template-columns:30px 1fr auto;column-gap:8px;row-gap:3px;align-items:center;width:100%;min-height:36px;background:none;border:0;border-radius:12px;padding:2px 8px;font:700 13.5px 'Nunito',sans-serif;color:var(--ink);text-align:left;cursor:pointer}
+.brs:hover{background:#ECEBE8}
+.brs.on{background:var(--tint)}
+.trek{grid-column:2 / 4;position:relative;height:5px;border-radius:4px;background:#E6E5E2}
+.trek i{position:absolute;top:0;height:100%;border-radius:4px;background:#888887}
+.trek i.neg{background:var(--bata)}
+.brs.on .trek i{background:var(--ink)}
+.brs.on .trek i.neg{background:var(--bata)}
+.trek b{position:absolute;top:-3px;width:2px;height:11px;background:var(--ink)}
+.obj{cursor:pointer;transition:opacity .3s}
+.redup{opacity:.22}
+/* tumbuh dari tanah: urutan muncul = peringkat sektor di lensa aktif; sektor negatif berakhir sedikit amblas */
+.gerak{transform-box:fill-box;transform-origin:50% 92%;transform:var(--akhir,none)}
+.tumbuhA{animation:tumbuhA .65s cubic-bezier(.3,1.5,.5,1) var(--d) both}
+.tumbuhB{animation:tumbuhB .65s cubic-bezier(.3,1.5,.5,1) var(--d) both}
+@keyframes tumbuhA{from{transform:scaleY(0);opacity:0}to{transform:var(--akhir,none);opacity:1}}
+@keyframes tumbuhB{from{transform:scaleY(0);opacity:0}to{transform:var(--akhir,none);opacity:1}}
+.angkat{animation:angkat .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes angkat{from{transform:translateY(46px);opacity:0}to{transform:none;opacity:1}}
+.balon{animation:balon .4s ease-out var(--bd,0ms) both}
+@keyframes balon{from{opacity:0}to{opacity:1}}
+/* alur final: pulau = provinsi yang diklik di peta, terbang dari posisinya di peta ke posisinya di sini (dan kembali) */
+.catbata{opacity:0}
+.alur .angkat{animation:none;transform-box:view-box;transform-origin:0 0}
+.dari-peta .angkat{animation:terbang .9s cubic-bezier(.65,0,.35,1) both}
+@keyframes terbang{from{transform:var(--dari)}to{transform:none}}
+.ke-peta .angkat{animation:pulang .75s cubic-bezier(.65,0,.35,1) .2s both}
+@keyframes pulang{from{transform:none}to{transform:var(--dari)}}
+.dari-peta .catbata{animation:bataPudar .45s ease .75s both}
+@keyframes bataPudar{from{opacity:1}to{opacity:0}}
+.ke-peta .catbata{animation:bataMuncul .35s ease .55s both}
+@keyframes bataMuncul{from{opacity:0}to{opacity:1}}
+.dari-peta .ui,.dari-peta .alas{animation:uiMasuk .5s ease-out .85s both}
+@keyframes uiMasuk{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ke-peta .ui,.ke-peta .alas,.ke-peta .obj,.ke-peta .balon{animation:uiKeluar .25s ease-in both;pointer-events:none}
+@keyframes uiKeluar{from{opacity:1}to{opacity:0}}
+.o-sawit,.o-taman{animation:goyang 4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 92%}
+@keyframes goyang{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+.pulau{animation:apung 6s ease-in-out infinite}
+@keyframes apung{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.balon{position:absolute;transform:translate(-50%,-100%);pointer-events:none;background:var(--bata);color:#fff;border-radius:18px;padding:9px 16px;white-space:nowrap;text-align:center}
+.mini{background:#FFFFFF;border-radius:14px;padding:7px 10px}
+.mini span{display:block;font:700 11.5px 'Nunito',sans-serif;color:var(--redam)}
+.mini b{font:900 16px 'Nunito',sans-serif}
+.mini.aktif{box-shadow:inset 0 0 0 2px var(--ink)}
+.turun{color:var(--bata)}
+.sorot,.cn{--atap:#E4572E;--atap2:#C2441F;--aksen:#E4572E;--aksen2:#F2A48A;--daun:#EE8A6B;--daun2:#C2441F;--tanah:#F2B9A5;--tanah2:#E08A6C}
+.c0{--atap:#E9E9E8;--atap2:#D4D4D3;--aksen:#D4D4D3;--aksen2:#E9E9E8;--daun:#DCDCDB;--daun2:#C8C8C7;--tanah:#ECECEB;--tanah2:#D9D9D8}
+.c1{--atap:#B5B5B4;--atap2:#9A9A99;--aksen:#A7A7A6;--aksen2:#C3C3C2;--daun:#AFAFAE;--daun2:#959594;--tanah:#C8C8C7;--tanah2:#ADADAC}
+.c2{--atap:#7D7D7C;--atap2:#626261;--aksen:#717170;--aksen2:#969695;--daun:#7D7D7C;--daun2:#626261;--tanah:#969695;--tanah2:#7D7D7C}
+.c3{--atap:#3E3E3D;--atap2:#2A2A29;--aksen:#4B4B4A;--aksen2:#626261;--daun:#4B4B4A;--daun2:#333332;--tanah:#626261;--tanah2:#4B4B4A}
+.bayang{fill:#000;opacity:.07}.batang{fill:#7D7D7C}.daun{fill:var(--daun,#B5B5B4)}.daun2{fill:var(--daun2,#8C8C8B)}.tanah{fill:var(--tanah,#D4D4D3)}.tanah2{fill:var(--tanah2,#B5B5B4)}
+.dinding{fill:#F7F7F6}.dinding2{fill:#D6D6D5}.atap{fill:var(--atap,#B5B5B4)}.atap2{fill:var(--atap2,#888887)}.kaca{fill:#6B6B6A}.kaca2{fill:#4B4B4A}
+.logam{fill:#E2E2E1}.logam2{fill:#B5B5B4}.aksen{fill:var(--aksen,#9A9A99)}.aksen2{fill:var(--aksen2,#C3C3C2)}.putih{fill:#FFFFFF}.air{fill:#D4D4D3}.air2{fill:#A7A7A6}.roda{fill:#1F1F1F}
+.garis{fill:none;stroke:#7D7D7C;stroke-width:1.5}.garis2{fill:none;stroke:#3E3E3D;stroke-width:1.7}.garis3{fill:none;stroke:#fff;stroke-opacity:.7;stroke-width:1}
+@media (prefers-reduced-motion: reduce){.dio *{animation:none!important;transition:none!important}}
+/* F · roda gigi: luas roda = porsi; kecepatan & arah putar = lensa aktif */
+.gigi{fill:var(--isi);stroke:var(--garis);stroke-width:1.2;stroke-linejoin:round}
+.muka{--isi:var(--atap,#CFCFCE);--hub:#FFFFFF;--poros:#7D7D7C;--garis:#FCFCFB}
+.sisi{--isi:var(--atap2,#9C9C9B);--hub:var(--atap2,#9C9C9B);--poros:var(--atap2,#9C9C9B);--garis:none}
+.hub{fill:var(--hub)}.poros{fill:var(--poros)}
+.putar{transform-box:view-box;transform-origin:0 0;animation:putar var(--dur,10s) linear infinite;animation-direction:var(--arah,normal)}
+@keyframes putar{to{transform:rotate(360deg)}}
+.lahir{transform-box:view-box;transform-origin:0 0;animation:lahir .7s cubic-bezier(.3,1.4,.5,1) var(--d) both}
+@keyframes lahir{0%{transform:translateY(22px) scale(.15);opacity:0}100%{transform:none;opacity:1}}
+.lompatA{transform-box:view-box;transform-origin:0 0;animation:lompatA .5s ease-out var(--d) both}
+.lompatB{transform-box:view-box;transform-origin:0 0;animation:lompatB .5s ease-out var(--d) both}
+@keyframes lompatA{0%,100%{transform:none}40%{transform:translateY(-12px)}}
+@keyframes lompatB{0%,100%{transform:none}40%{transform:translateY(-12px)}}
+.tiada{display:none}
+.percik{fill:#E4572E;transform-box:fill-box;transform-origin:50% 50%;animation:percik 1.6s ease-out var(--pd,0s) infinite}
+@keyframes percik{0%{transform:translate(0,0) scale(1);opacity:0}15%{opacity:1}100%{transform:translate(var(--px),-26px) scale(.3);opacity:0}}
+</style>
+</helmet>
+<div class="{{akarCls}}" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: {{latar}}; font-family: 'Nunito', sans-serif; color: #1F1F1F">
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Diorama {{h.nama}} berbentuk pulau aslinya; 17 roda gigi sektor, luas roda = porsi PDRB, kecepatan putar mengikuti lensa">
+<defs>
+<symbol id="ik-sawit" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="batang" d="M24.5 79 L25.3 50 L26.9 50 L27.7 79 Z"/><path class="daun2" d="M26 50 Q18 36 9 37 Q19 42 25 52 Z"/><path class="daun2" d="M26 50 Q34 36 43 37 Q33 42 27 52 Z"/><path class="daun" d="M26 51 Q15 43 5 52 Q16 47 26 54 Z"/><path class="daun" d="M26 51 Q37 43 47 52 Q36 47 26 54 Z"/><path class="daun" d="M26 51 Q27 38 23 31 Q31 40 28 51 Z"/><circle class="aksen" cx="24.5" cy="54" r="2.2"/><circle class="aksen" cx="28" cy="54.5" r="2.2"/></symbol>
+<symbol id="ik-tambang" viewBox="0 0 52 90"><path class="tanah2" d="M4 80 Q10 64 20 69 Q27 59 37 68 Q45 72 48 80 Z"/><path class="tanah" d="M10 80 Q15 70 22 73 Q28 66 35 72 Q41 75 42 80 Z"/><polygon class="logam" points="22,84 30,88 30,79 22,75"/><polygon class="logam2" points="30,88 38,84 38,75 30,79"/><polygon class="aksen" points="22,75 30,71 38,75 30,79"/><polygon class="aksen2" points="14,79 20,82 20,75 14,72"/><polygon class="aksen" points="20,82 26,79 26,72 20,75"/><polygon class="kaca" points="14,72 20,69 26,72 20,75"/><ellipse class="roda" cx="24" cy="85" rx="2.6" ry="3"/><ellipse class="roda" cx="33" cy="88" rx="2.6" ry="3"/></symbol>
+<symbol id="ik-pabrik" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="10,77 26,85 26,69 10,61"/><polygon class="dinding2" points="26,85 42,77 42,61 26,69"/><polygon class="atap" points="10,61 26,53 42,61 26,69"/><polygon class="atap2" points="10,61 14,55 18,61 22,57 26,63 26,61"/><polygon class="putih" points="30.8,70 34,71.6 34,41.6 30.8,40"/><polygon class="logam2" points="34,71.6 37.2,70 37.2,40 34,41.6"/><polygon class="logam" points="30.8,40 34,38.4 37.2,40 34,41.6"/><rect class="aksen" x="30.8" y="49" width="6.4" height="3"/><rect class="kaca" x="18.9" y="69.8" width="3" height="3"/><rect class="kaca" x="30.1" y="69.8" width="3" height="3"/><rect class="kaca" x="13.3" y="72.6" width="3" height="3"/><rect class="kaca" x="35.7" y="72.6" width="3" height="3"/></symbol>
+<symbol id="ik-listrik" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis" d="M18 80 L24 42 L28 42 L34 80 M20 68 L32 68 M22 56 L30 56 M14 50 L38 50 M16 44 L36 44 M21 80 L30 56 M31 80 L22 56"/><circle class="aksen" cx="14" cy="51" r="1.5"/><circle class="aksen" cx="38" cy="51" r="1.5"/></symbol>
+<symbol id="ik-air" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis" d="M18 80 L20 58 M34 80 L32 58 M26 83 L26 60"/><ellipse class="air2" cx="26" cy="58" rx="11" ry="5"/><rect class="air2" x="15" y="44" width="22" height="14"/><ellipse class="air" cx="26" cy="44" rx="11" ry="5"/><rect class="putih" x="17" y="49" width="2" height="7"/></symbol>
+<symbol id="ik-crane" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="20,79 30,84 30,74 20,69"/><polygon class="dinding2" points="30,84 40,79 40,69 30,74"/><polygon class="tanah" points="20,69 30,64 40,69 30,74"/><path class="garis2" d="M14 80 L14 24 M17 80 L17 24 M14 30 L44 24 M14 24 L8 26 M40 25 L40 40"/><rect class="aksen" x="12" y="20" width="7" height="6"/><rect class="aksen" x="37.5" y="40" width="5" height="4"/></symbol>
+<symbol id="ik-toko" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="11,77 26,84.5 26,70.5 11,63"/><polygon class="dinding2" points="26,84.5 41,77 41,63 26,70.5"/><polygon class="atap" points="11,63 26,55.5 41,63 26,70.5"/><polygon class="aksen" points="11,63 26,70.5 26,74 9,66"/><polygon class="putih" points="15,65 19,67 18.6,70.3 14,68"/><polygon class="aksen2" points="26,70.5 41,63 43,66 26,74"/><polygon class="putih" points="33,67 37,65 38.5,68.2 34,70.3"/><rect class="kaca" x="15" y="72" width="7" height="6"/><rect class="kaca" x="30" y="72" width="7" height="6"/></symbol>
+<symbol id="ik-kontainer" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="aksen" points="12,80 22,85 22,76 12,71"/><polygon class="aksen2" points="22,85 32,80 32,71 22,76"/><polygon class="atap" points="12,71 22,66 32,71 22,76"/><polygon class="air" points="21,76 31,81 31,72 21,67"/><polygon class="air2" points="31,81 41,76 41,67 31,72"/><polygon class="atap" points="21,67 31,62 41,67 31,72"/><polygon class="daun" points="16,61 26,66 26,57 16,52"/><polygon class="daun2" points="26,66 36,61 36,52 26,57"/><polygon class="atap" points="16,52 26,47 36,52 26,57"/></symbol>
+<symbol id="ik-hotel" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="11,79 24,85.5 24,55.5 11,49"/><polygon class="dinding2" points="24,85.5 37,79 37,49 24,55.5"/><polygon class="atap" points="11,49 24,42.5 37,49 24,55.5"/><rect class="kaca" x="17.9" y="73.7" width="3" height="3"/><rect class="kaca" x="27.1" y="73.7" width="3" height="3"/><rect class="kaca" x="13.4" y="75.9" width="3" height="3"/><rect class="kaca" x="31.6" y="75.9" width="3" height="3"/><rect class="kaca" x="17.9" y="64.3" width="3" height="3"/><rect class="kaca" x="27.1" y="64.3" width="3" height="3"/><rect class="kaca" x="13.4" y="66.5" width="3" height="3"/><rect class="kaca" x="31.6" y="66.5" width="3" height="3"/><rect class="kaca" x="17.9" y="54.9" width="3" height="3"/><rect class="kaca" x="27.1" y="54.9" width="3" height="3"/><rect class="kaca" x="13.4" y="57.2" width="3" height="3"/><rect class="kaca" x="31.6" y="57.2" width="3" height="3"/><path class="garis2" d="M42 82 L42 66"/><path class="aksen" d="M33 67 Q42 57 51 67 Z"/><path class="putih" d="M38.5 67 Q42 59 45.5 67 Z"/></symbol>
+<symbol id="ik-menara" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><path class="garis2" d="M20 80 L25 30 L27 30 L32 80 M22 66 L30 66 M23 52 L29 52 M21 74 L29 58 M31 74 L23 58"/><rect class="aksen" x="23.5" y="38" width="5" height="6"/><rect class="putih" x="23.5" y="44" width="5" height="6"/><path class="garis" d="M33 30 Q37 35 33 40 M36 27 Q42 35 36 43 M19 30 Q15 35 19 40"/></symbol>
+<symbol id="ik-bank" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="10,80 26,88 26,85 10,77"/><polygon class="logam" points="26,88 42,80 42,77 26,85"/><polygon class="putih" points="10,77 26,69 42,77 26,85"/><polygon class="dinding" points="12,77 26,84 26,68 12,61"/><polygon class="dinding2" points="26,84 40,77 40,61 26,68"/><polygon class="putih" points="12,61 26,54 40,61 26,68"/><rect class="putih" x="14" y="63" width="2.5" height="13"/><rect class="putih" x="19" y="65.5" width="2.5" height="13"/><rect class="putih" x="29" y="65.5" width="2.5" height="13"/><rect class="putih" x="34" y="63" width="2.5" height="13"/><polygon class="atap" points="10,61 26,53 26,69"/><polygon class="atap2" points="26,53 42,61 26,69"/><circle class="aksen2" cx="26" cy="61" r="2"/></symbol>
+<symbol id="ik-rumah" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="13,77 26,83.5 26,72.5 13,66"/><polygon class="dinding2" points="26,83.5 39,77 39,66 26,72.5"/><polygon class="atap" points="13,66 26,59.5 39,66 26,72.5"/><polygon class="atap" points="11,64 20,56 33,62.5 26,70"/><polygon class="atap2" points="26,70 33,62.5 41,66 39,66"/><polygon class="dinding2" points="26,70 33,62.5 39,66 39,70"/><rect class="kaca" x="17" y="71" width="4" height="5"/><rect class="aksen" x="31" y="72" width="4" height="7"/></symbol>
+<symbol id="ik-kantor" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="kaca" points="15,77 26,82.5 26,38.5 15,33"/><polygon class="kaca2" points="26,82.5 37,77 37,33 26,38.5"/><polygon class="putih" points="15,33 26,27.5 37,33 26,38.5"/><path class="garis3" d="M15 40 L26 45.5 L37 40"/><path class="garis3" d="M15 47 L26 52.5 L37 47"/><path class="garis3" d="M15 54 L26 59.5 L37 54"/><path class="garis3" d="M15 61 L26 66.5 L37 61"/><path class="garis3" d="M15 68 L26 73.5 L37 68"/><path class="garis3" d="M15 75 L26 80.5 L37 75"/></symbol>
+<symbol id="ik-pemda" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="10,77 26,85 26,72 10,64"/><polygon class="dinding2" points="26,85 42,77 42,64 26,72"/><polygon class="atap" points="10,64 26,56 42,64 26,72"/><rect class="dinding" x="22" y="50" width="8" height="10"/><path class="aksen2" d="M20 51 Q26 37 32 51 Z"/><path class="garis2" d="M26 44 L26 31"/><rect class="aksen" x="26" y="31" width="8" height="3"/><rect class="putih" x="26" y="34" width="8" height="3"/><rect class="kaca" x="14" y="66" width="2" height="7"/><rect class="kaca" x="19" y="68.5" width="2" height="7"/><rect class="kaca" x="31" y="68.5" width="2" height="7"/><rect class="kaca" x="36" y="66" width="2" height="7"/></symbol>
+<symbol id="ik-sekolah" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="dinding" points="10,78 24,85 24,71 10,64"/><polygon class="dinding2" points="24,85 38,78 38,64 24,71"/><polygon class="atap" points="10,64 24,57 38,64 24,71"/><rect class="kaca" x="17.6" y="71.5" width="3" height="3"/><rect class="kaca" x="27.4" y="71.5" width="3" height="3"/><rect class="kaca" x="12.7" y="73.9" width="3" height="3"/><rect class="kaca" x="32.3" y="73.9" width="3" height="3"/><polygon class="atap" points="9,64 24,57 24,71"/><polygon class="atap2" points="24,57 39,64 24,71"/><path class="garis2" d="M44 82 L44 52"/><rect class="aksen" x="44" y="52" width="7" height="3"/><rect class="putih" x="44" y="55" width="7" height="3"/></symbol>
+<symbol id="ik-rs" viewBox="0 0 52 90"><ellipse class="bayang" cx="26" cy="79" rx="15" ry="6"/><polygon class="putih" points="11,77 26,84.5 26,64.5 11,57"/><polygon class="logam" points="26,84.5 41,77 41,57 26,64.5"/><polygon class="putih" points="11,57 26,49.5 41,57 26,64.5"/><path class="aksen" d="M24 46 h4 v3 h3 v4 h-3 v3 h-4 v-3 h-3 v-4 h3 Z"/><path class="aksen" d="M30.5 72 h3 v2.5 h2.5 v3 h-2.5 v2.5 h-3 v-2.5 h-2.5 v-3 h2.5 Z"/><rect class="kaca" x="19.2" y="67.6" width="3" height="3"/><rect class="kaca" x="29.8" y="67.6" width="3" height="3"/><rect class="kaca" x="14" y="70.2" width="3" height="3"/><rect class="kaca" x="35" y="70.2" width="3" height="3"/></symbol>
+<symbol id="ik-taman" viewBox="0 0 52 90"><ellipse class="bayang" cx="22" cy="80" rx="13" ry="5"/><path class="batang" d="M21 80 L21.5 62 L23 62 L23.5 80 Z"/><circle class="daun2" cx="22" cy="56" r="10"/><circle class="daun" cx="20" cy="53" r="7"/><path class="garis2" d="M33 83 L33 78 M42 79 L42 74 M31 78 L44 73"/><circle class="aksen" cx="12" cy="76" r="1.6"/><circle class="aksen2" cx="35" cy="70" r="1.6"/></symbol>
+<symbol id="gigi" viewBox="-60 -60 120 120"><path class="gigi" d="M48.3,-12.9L49.4,-7.8L59.8,-5.2L59.8,5.2L49.4,7.8L48.3,12.9L46.7,17.9L54.4,25.4L49.1,34.4L38.9,31.5L35.4,35.4L31.5,38.9L34.4,49.1L25.4,54.4L17.9,46.7L12.9,48.3L7.8,49.4L5.2,59.8L-5.2,59.8L-7.8,49.4L-12.9,48.3L-17.9,46.7L-25.4,54.4L-34.4,49.1L-31.5,38.9L-35.4,35.4L-38.9,31.5L-49.1,34.4L-54.4,25.4L-46.7,17.9L-48.3,12.9L-49.4,7.8L-59.8,5.2L-59.8,-5.2L-49.4,-7.8L-48.3,-12.9L-46.7,-17.9L-54.4,-25.4L-49.1,-34.4L-38.9,-31.5L-35.4,-35.4L-31.5,-38.9L-34.4,-49.1L-25.4,-54.4L-17.9,-46.7L-12.9,-48.3L-7.8,-49.4L-5.2,-59.8L5.2,-59.8L7.8,-49.4L12.9,-48.3L17.9,-46.7L25.4,-54.4L34.4,-49.1L31.5,-38.9L35.4,-35.4L38.9,-31.5L49.1,-34.4L54.4,-25.4L46.7,-17.9Z"></path><circle class="hub" r="27"></circle><circle class="poros" r="7"></circle></symbol>
+</defs>
+<g class="angkat" style="--dari: {{dari}}">
+<ellipse class="alas" cx="{{bayang.x}}" cy="{{bayang.y}}" rx="{{bayang.rx}}" ry="{{bayang.ry}}" fill="#000" fill-opacity="0.05"></ellipse>
+<g class="pulau">
+<path d="{{pulau.kiri}}" fill="#D6D6D5"></path>
+<path d="{{pulau.kanan}}" fill="#C1C1C1"></path>
+<path d="{{pulau.atas}}" fill="#EDEDEC" stroke="#FCFCFB" stroke-width="1.5" stroke-linejoin="round"></path>
+<g class="catbata"><path d="{{pulau.kiri}}" fill="#C2441F"></path><path d="{{pulau.kanan}}" fill="#C2441F"></path><path d="{{pulau.atas}}" fill="#E4572E" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"></path></g>
+<sc-for list="{{obj}}" as="o" hint-placeholder-count="17">
+<g class="{{o.wrap}}" onClick="{{o.pick}}">
+<g transform="{{o.pos}}">
+<g class="{{o.gerak}}" style="{{o.gaya}}">
+<g transform="{{o.t2}}"><g class="putar" style="{{o.putar}}"><use href="#gigi" class="{{o.sisi}}" x="{{o.m}}" y="{{o.m}}" width="{{o.d}}" height="{{o.d}}"></use></g></g>
+<g transform="{{o.t1}}"><g class="putar" style="{{o.putar}}"><use href="#gigi" class="{{o.sisi}}" x="{{o.m}}" y="{{o.m}}" width="{{o.d}}" height="{{o.d}}"></use></g></g>
+<g transform="scale(1,0.66)"><g class="putar" style="{{o.putar}}"><use href="#gigi" class="{{o.muka}}" x="{{o.m}}" y="{{o.m}}" width="{{o.d}}" height="{{o.d}}"></use></g></g>
+<use href="{{o.ik}}" class="{{o.ikCls}}" x="{{o.ix}}" y="{{o.iy}}" width="{{o.iw}}" height="{{o.ih}}"></use>
+<circle class="{{o.pcls}}" cx="{{o.px}}" cy="{{o.py}}" r="2.2" style="--px: 6px"></circle>
+<circle class="{{o.pcls}}" cx="{{o.px}}" cy="{{o.py}}" r="1.8" style="--px: -7px; --pd: .8s"></circle>
+</g>
+</g>
+</g>
+</sc-for>
+</g>
+</g>
+</svg>
+
+<div class="ui" style="position: absolute; left: 40px; top: 32px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{diAlur}}" hint-placeholder-val="{{ false }}">
+<button class="kembali" onClick="{{kembali}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Peta</button>
+</sc-if>
+<sc-if value="{{mandiri}}" hint-placeholder-val="{{ true }}">
+<a class="kembali" href="Beranda7c.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Peta</a>
+</sc-if>
+<span class="pill">Mesin ekonomi · 2025 · harga konstan 2010</span>
+<h1 style="font-size: {{h.fs}}px; font-weight: 900; letter-spacing: -.015em; line-height: 1; max-width: 360px">{{h.nama}}</h1>
+<div style="display: flex; gap: 6px; flex-wrap: wrap; max-width: 360px">
+<span class="chip" style="color: #C2441F">{{h.nilai}}</span>
+<span class="chip">{{h.peringkat}}</span>
+<span class="chip"><span class="{{h.gcls}}">{{h.tumbuh}}</span> <span class="kecil">· nasional {{h.nasional}}</span></span>
+</div>
+</div>
+
+<div class="ui" style="position: absolute; left: 410px; top: 32px; width: 548px; display: flex; flex-direction: column; gap: 8px">
+<div class="lensa">
+<sc-for list="{{lensa}}" as="b" hint-placeholder-count="5"><button class="{{b.cls}}" onClick="{{b.klik}}">{{b.label}}</button></sc-for>
+</div>
+<p style="font-size: 13.5px; font-weight: 700; color: #474747; padding: 0 6px">{{L.jelas}}</p>
+<div class="legenda" style="padding: 0 6px">
+<sc-for list="{{L.legenda}}" as="l" hint-placeholder-count="5"><span><i style="background: {{l.warna}}"></i>{{l.label}}</span></sc-for>
+</div>
+</div>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="balon" style="left: {{c.x}}px; top: {{c.y}}px; --bd: {{c.bd}}">
+<p style="font-size: 12.5px; font-weight: 700">{{c.nama}}</p>
+<p style="font-size: 22px; font-weight: 900; line-height: 1.15">{{c.utama}}</p>
+<p style="font-size: 12.5px; font-weight: 700">{{c.kedua}}</p>
+</div>
+
+<div class="kartu ui" style="position: absolute; left: 40px; bottom: 36px; width: 560px; padding: 14px 16px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px">
+<span style="font-size: 16px; font-weight: 900">{{c.nama}}</span>
+<span class="kecil">roda terpilih · semua ukuran</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{c.mini}}" as="m" hint-placeholder-count="6">
+<div class="{{m.cls}}"><span>{{m.label}}</span><b class="{{m.vcls}}">{{m.nilai}}</b></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{memuat}}" hint-placeholder-val="{{ false }}">
+<p class="kecil" style="position: absolute; left: 460px; top: 440px">Memuat data…</p>
+</sc-if>
+
+<div class="kartu ui" style="position: absolute; right: 36px; top: 32px; bottom: 36px; width: 430px; padding: 16px 12px 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 8px 6px">
+<h2 style="font-size: 20px; font-weight: 900">Isi mesin</h2>
+<span class="kecil">{{L.kolom}}</span>
+</div>
+<sc-for list="{{daftar}}" as="r" hint-placeholder-count="17">
+<button class="{{r.cls}}" onClick="{{r.pick}}">
+<svg width="30" height="30" viewBox="4 28 44 56" aria-hidden="true"><use href="{{r.ik}}" class="{{r.warna}}" x="0" y="0" width="52" height="90"></use></svg>
+<span>{{r.nama}}</span>
+<span class="{{r.vcls}}" style="font-weight: 800; font-size: 13px">{{r.teks}}</span>
+<span class="trek"><i class="{{r.bcls}}" style="left: {{r.bl}}; width: {{r.bw}}"></i><b style="left: {{L.refPos}}"></b></span>
+</button>
+</sc-for>
+<p class="kecil" style="padding: 6px 8px 0; font-size: 11.5px">{{L.catatan}}</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"prov":{"editor":"enum","options":["Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi", "Sumatera Selatan", "Bengkulu", "Lampung", "Kep. Bangka Belitung", "Kep. Riau", "DKI Jakarta", "Jawa Barat", "Jawa Tengah", "DI Yogyakarta", "Jawa Timur", "Banten", "Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur", "Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Selatan", "Kalimantan Timur", "Kalimantan Utara", "Sulawesi Utara", "Sulawesi Tengah", "Sulawesi Selatan", "Sulawesi Tenggara", "Gorontalo", "Sulawesi Barat", "Maluku", "Maluku Utara", "Papua Tengah", "Papua Selatan", "Papua", "Papua Pegunungan", "Papua Barat", "Papua Barat Daya"],"default":"Jawa Timur","section":"Diorama"},"onKembali":{"editor":null},"dari":{"editor":null},"fase":{"editor":null},"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/1e41bd128e20898522225326b1d47201'; // data.json + PDB nasional per sektor (BPS var 65)
+const KEY = '2025_konstan', LALU = '2024_konstan', BERLAKU = '2025_berlaku';
+const V = { a: -8, sq: 0.66, lebar: 800, tinggi: 330, cx: 490, cy: 478, tebal: 26 };
+const JEDA = 380;
+const RMIN = 9, RMAX = 112;
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const nf2 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const nf0 = new Intl.NumberFormat('id-ID', { maximumFractionDigits: 0 });
+const rp = (v) => 'Rp ' + nf1.format(v / 1000) + ' T';
+const pct = (v) => nf1.format(v) + '%';
+const sgn = (g) => (g >= 0 ? '+' : '−') + pct(Math.abs(g));
+const pp = (x) => (x >= 0 ? '+' : '−') + nf2.format(Math.abs(x)) + ' poin';
+const f1 = (v) => v.toFixed(1);
+const ABU = ['#E9E9E8', '#B5B5B4', '#7D7D7C', '#3E3E3D'], BATA = '#E4572E';
+
+function diDalam(x, y, ring) { // ray casting
+  let ok = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) ok = !ok;
+  }
+  return ok;
+}
+
+// Affine yang memetakan pulau diorama ke bentuk provinsi yang sama di peta beranda (keduanya affine dari koordinat mentah,
+// jadi hasilnya satu matrix() yang tepat). m = kamera peta: { a, sq, s, ox, oy } (oy sudah dikurangi tinggi ekstrusi).
+function matriks(af, m) {
+  const r = (a, sq) => { const t = a * Math.PI / 180, c = Math.cos(t), s = Math.sin(t); return [c, -s, sq * s, sq * c]; };
+  const D = r(V.a, V.sq).map((v) => v * af.S), Mp = r(m.a, m.sq).map((v) => v * m.s);
+  const det = D[0] * D[3] - D[1] * D[2], Di = [D[3] / det, -D[1] / det, -D[2] / det, D[0] / det];
+  const M = [Mp[0] * Di[0] + Mp[1] * Di[2], Mp[0] * Di[1] + Mp[1] * Di[3], Mp[2] * Di[0] + Mp[3] * Di[2], Mp[2] * Di[1] + Mp[3] * Di[3]];
+  const e = m.ox - (M[0] * af.tx + M[1] * af.ty), f = m.oy - (M[2] * af.tx + M[3] * af.ty);
+  return 'matrix(' + [M[0], M[2], M[1], M[3], e, f].map((v) => +v.toFixed(4)).join(',') + ')';
+}
+
+// Semua ukuran per sektor, hanya dari data yang ada (PDRB provinsi + PDB nasional BPS)
+function ukur(d, p) {
+  const t25 = p.pdrb[KEY], t24 = p.pdrb[LALU], tb = p.pdrb[BERLAKU];
+  const nas = d.nasional.sektor[KEY], ntb = nas.reduce((a, b) => a + b, 0);
+  const tb24 = p.pdrb['2024_berlaku'];
+  // kenaikan harga = (indeks implisit 2025 / indeks implisit 2024 - 1); indeks implisit = berlaku / konstan
+  const naik = (b25, k25, b24, k24) => ((b25 / k25) / (b24 / k24) - 1) * 100;
+  return { prov: { t25, t24, tb, g: (t25 / t24 - 1) * 100, infl: naik(tb, t25, tb24, t24), nasG: d.nasional.tumbuh_riil_2025 },
+    sek: d.sektor.map((s, i) => {
+      const v = p.sektor[KEY][i], v0 = p.sektor[LALU][i], vb = p.sektor[BERLAKU][i];
+      return { ...s, i, v, v0, vb, porsi: v / t25 * 100, g: v0 ? (v / v0 - 1) * 100 : 0, sumb: (v - v0) / t24 * 100,
+        lq: (v / t25) / (nas[i] / ntb), infl: naik(vb, v, p.sektor['2024_berlaku'][i], v0) };
+    }) };
+}
+
+const LENSA = {
+  porsi: { label: 'Porsi', kolom: 'nilai · porsi PDRB', m: (s) => s.porsi, teks: (s) => nf1.format(s.v / 1000) + ' T · ' + pct(s.porsi),
+    jelas: '1 bangunan = 1% PDRB. Komposisi ekonomi menurut 17 lapangan usaha.',
+    kelas: () => '', legenda: () => [['#B5B5B4', 'bangunan sektor'], [BATA, 'sektor terpilih']] },
+  tumbuh: { label: 'Tumbuh', kolom: 'tumbuh riil 2024→2025', m: (s) => s.g, teks: (s) => sgn(s.g), skala: [-10, 15],
+    jelas: 'Laju riil tiap sektor (harga konstan 2010), 2025 dibanding 2024.',
+    kelas: (s) => s.g < 0 ? 'cn' : s.g < 3 ? 'c0' : s.g < 6 ? 'c1' : s.g < 10 ? 'c2' : 'c3',
+    legenda: () => [[BATA, 'menyusut'], [ABU[0], '0–3%'], [ABU[1], '3–6%'], [ABU[2], '6–10%'], [ABU[3], '≥ 10%']] },
+  sumber: { label: 'Sumber tumbuh', kolom: 'sumbangan ke pertumbuhan', m: (s) => s.sumb, teks: (s) => pp(s.sumb),
+    jelas: 'Sumbangan tiap sektor terhadap pertumbuhan provinsi (poin persen); jumlahnya = laju provinsi.',
+    kelas: (s) => s.sumb < 0 ? 'cn' : s.sumb < 0.1 ? 'c0' : s.sumb < 0.5 ? 'c1' : s.sumb < 1 ? 'c2' : 'c3',
+    legenda: () => [[BATA, 'menekan'], [ABU[0], '< 0,1'], [ABU[1], '0,1–0,5'], [ABU[2], '0,5–1'], [ABU[3], '≥ 1 poin']] },
+  spesial: { label: 'Spesialisasi', kolom: 'LQ vs nasional', m: (s) => s.lq, teks: (s) => 'LQ ' + nf2.format(s.lq), ref: 1,
+    jelas: 'Location quotient: porsi sektor di provinsi dibanding porsinya di PDB nasional. LQ > 1 = lebih menonjol dari nasional.',
+    kelas: (s) => s.lq < 0.5 ? 'c0' : s.lq < 1 ? 'c1' : s.lq < 2 ? 'c2' : 'c3',
+    legenda: () => [[ABU[0], '< 0,5'], [ABU[1], '0,5–1'], [ABU[2], '1–2'], [ABU[3], '≥ 2']] },
+  harga: { label: 'Kenaikan harga', kolom: 'kenaikan harga 2025 vs 2024', m: (s) => s.infl, teks: (s) => sgn(s.infl),
+    jelas: 'Seberapa naik harga hasil produksi tiap sektor dibanding 2024. Bukan inflasi belanja rumah tangga (IHK): ini harga barang/jasa yang dihasilkan sektor di provinsi.',
+    kelas: (s) => s.infl < 0 ? 'cn' : s.infl < 1.5 ? 'c0' : s.infl < 3 ? 'c1' : s.infl < 5 ? 'c2' : 'c3',
+    legenda: () => [[BATA, 'harga turun'], [ABU[0], '0–1,5%'], [ABU[1], '1,5–3%'], [ABU[2], '3–5%'], [ABU[3], '≥ 5%']] },
+};
+
+// Pulau + titik kandidat (rapat) untuk menaruh roda; luas & jarak-ke-pantai dalam ruang "tak-gepeng" (y / sq)
+function bangunPulau(p) {
+  const rad = V.a * Math.PI / 180, ca = Math.cos(rad), sa = Math.sin(rad);
+  const rings = p.rings.map((rs) => rs.split(' ').map((t) => t.split(',').map(Number)));
+  const R0 = (x, y) => [x * ca - y * sa, (x * sa + y * ca) * V.sq];
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  rings.forEach((r) => r.forEach(([x, y]) => { const q = R0(x, y); x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); }));
+  const S = Math.min(V.lebar / (x1 - x0), V.tinggi / (y1 - y0));
+  const P = (x, y) => { const q = R0(x, y); return [V.cx + (q[0] - (x0 + x1) / 2) * S, V.cy + (q[1] - (y0 + y1) / 2) * S]; };
+  let atas = '', kiri = '', kanan = '', luas = 0;
+  const pr = rings.map((rr) => rr.map(([x, y]) => P(x, y)));
+  pr.forEach((r) => {
+    let A = 0;
+    r.forEach((q, i) => { const o = r[(i + 1) % r.length]; A += q[0] * o[1] - o[0] * q[1]; });
+    luas += Math.abs(A) / 2 / V.sq;
+    const sg = A > 0 ? 1 : -1, T = V.tebal;
+    atas += 'M' + r.map((q) => f1(q[0]) + ',' + f1(q[1])).join('L') + 'Z';
+    r.forEach((q, i) => {
+      const o = r[(i + 1) % r.length], dx = o[0] - q[0], dy = o[1] - q[1];
+      if (-sg * dx <= 0) return;
+      const quad = 'M' + f1(q[0]) + ',' + f1(q[1]) + 'L' + f1(o[0]) + ',' + f1(o[1]) + 'L' + f1(o[0]) + ',' + f1(o[1] + T) + 'L' + f1(q[0]) + ',' + f1(q[1] + T) + 'Z';
+      if (sg * dy < 0) kiri += quad; else kanan += quad;
+    });
+  });
+  // kandidat: grid di layar, di darat atau dekat pantai (provinsi kepulauan: roda boleh menjorok ke laut)
+  const un = pr.map((r) => r.map(([x, y]) => [x, y / V.sq]));
+  const seg = (px, py, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy || 1, t = Math.max(0, Math.min(1, ((px - a[0]) * dx + (py - a[1]) * dy) / L)); return Math.hypot(px - a[0] - t * dx, py - a[1] - t * dy); };
+  const kotak = (x1 - x0) * S * (y1 - y0) * S / V.sq, jarang = luas < 0.2 * kotak; // jarang = kepulauan / darat tipis
+  const cand = [], pantai = [], g = 26, sabuk = jarang ? 64 : 34;
+  for (let y = V.cy - V.tinggi / 2 + g / 3; y < V.cy + V.tinggi / 2; y += g * V.sq) for (let x = V.cx - V.lebar / 2 + g / 3; x < V.cx + V.lebar / 2; x += g) {
+    const di = pr.some((r) => diDalam(x, y, r)), jr = Math.min(...un.map((r) => Math.min(...r.map((a, i) => seg(x, y / V.sq, a, r[(i + 1) % r.length])))));
+    if (di || jr < sabuk) { cand.push([x, y / V.sq]); pantai.push(di ? jr : -jr); }
+  }
+  luas = Math.max(luas, 0.3 * kotak); // kepulauan: luas efektif tidak terlalu kecil
+  return { af: { S, tx: V.cx - (x0 + x1) / 2 * S, ty: V.cy - (y0 + y1) / 2 * S }, atas, kiri, kanan, cand, pantai, luas,
+    bayang: { x: V.cx, y: f1(V.cy + (y1 - y0) * S / 2 + V.tebal + 10), rx: f1((x1 - x0) * S / 2), ry: 34 } };
+}
+
+// Tata letak roda: terbesar dulu, di titik yang paling lega (jauh dari roda lain & pantai), sedikit tertarik ke tengah.
+// Kalau ada yang bertumpuk > 18% jari-jari, semua roda dikecilkan lalu diulang. Luas roda tetap sebanding porsi.
+function susunRoda(pl, sek) {
+  const C = pl.cand, mx = C.reduce((a, q) => a + q[0], 0) / C.length, my = C.reduce((a, q) => a + q[1], 0) / C.length;
+  const urut = sek.slice().sort((a, b) => b.porsi - a.porsi);
+  let skala = Math.sqrt(0.5 * pl.luas / Math.PI), terbaik = null, nilai = -1e9;
+  for (let it = 0; it < 40; it++) {
+    const put = [];
+    let buruk = 0;
+    for (const s of urut) {
+      const rAsli = skala * Math.sqrt(s.porsi / 100), r = Math.min(RMAX, Math.max(RMIN, rAsli));
+      // titik yang tidak bertumpuk berlebihan diutamakan; di antaranya pilih yang paling lega & paling di darat
+      let bi = 0, bs = -1e9, bc = -1e9, ci = 0;
+      C.forEach(([x, y], i) => {
+        let cl = 1e6;
+        put.forEach((q) => { cl = Math.min(cl, Math.hypot(x - q.x, y - q.y) - q.r - r); });
+        if (cl > bc) { bc = cl; ci = i; }
+        const sc = Math.min(cl, 0.5 * (pl.pantai[i] - 0.6 * r)) - 0.03 * Math.hypot(x - mx, y - my);
+        if (cl >= -0.18 * r && sc > bs) { bs = sc; bi = i; }
+      });
+      if (bs === -1e9) bi = ci; else bc = Math.max(-0.18 * r, Math.min(bc, 0));
+      buruk = Math.min(buruk, bc / r);
+      put.push({ s, x: C[bi][0], y: C[bi][1], Y: C[bi][1] * V.sq, r, urutan: put.length, kecil: rAsli < RMIN });
+    }
+    if (buruk > nilai) { nilai = buruk; terbaik = put; }
+    if (buruk >= -0.18) break; // tumpang tindih <= 18% jari-jari (gigi saling mengait)
+    skala *= 0.93;
+  }
+  return terbaik;
+}
+
+const JELAS = {
+  porsi: 'Luas roda = porsi PDRB. Seperti gir sungguhan: roda besar berputar pelan, roda kecil lincah.',
+  tumbuh: 'Kecepatan putar = laju riil 2025 vs 2024. Roda yang berputar mundur = sektornya menyusut.',
+  sumber: 'Kecepatan putar = sumbangan ke pertumbuhan provinsi. Berputar mundur = menekan pertumbuhan.',
+  spesial: 'Kecepatan putar = LQ vs nasional (LQ 3 ke atas paling cepat). Warna = kelas LQ.',
+  harga: 'Kecepatan putar = kenaikan harga hasil produksi sektor. Berputar mundur = harganya turun.',
+};
+Object.keys(JELAS).forEach((k) => { LENSA[k].jelas = JELAS[k]; });
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, pilih: null, lensa: 'porsi', putar: 0 };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, Lid = s.lensa, Ld = LENSA[Lid];
+    const lensa = Object.keys(LENSA).map((id) => ({ label: LENSA[id].label, cls: id === Lid ? 'on' : '', klik: () => id !== Lid && this.setState({ lensa: id, putar: s.putar + 1 }) }));
+    const PROV = this.props.prov ?? 'Jawa Timur', onK = this.props.onKembali;
+    const fase = this.props.fase, dariPeta = this.props.dari;
+    const alur = { diAlur: !!onK, mandiri: !onK, kembali: () => onK && onK(), latar: onK ? 'transparent' : '#FCFCFB',
+      akarCls: 'dio' + (onK ? ' alur' : '') + (onK && fase === 'masuk' ? ' dari-peta' : onK && fase === 'kembali' ? ' ke-peta' : ''), dari: 'none' };
+    const jeda = onK ? 1000 : JEDA;
+    if (!d) return { ...alur, siap: false, memuat: true, lensa, L: { legenda: [] }, obj: [], daftar: [], c: { mini: [] }, pulau: {}, bayang: {}, h: { nama: PROV, fs: 46 } };
+    const p = d.provinsi.find((x) => x.nama === PROV) || d.provinsi.find((x) => x.nama === 'Jawa Timur');
+    const u = ukur(d, p), sek = u.sek;
+    if (this._plN !== p.nama) { this._plN = p.nama; this._pl = bangunPulau(p); this._roda = susunRoda(this._pl, sek); }
+    const pl = this._pl, roda = this._roda;
+    const urutPorsi = sek.slice().sort((a, b) => b.v - a.v);
+    const eff = s.pilih || urutPorsi[0].kode;
+    const kelas = (x) => Lid === 'porsi' ? (x.kode === eff ? 'sorot' : '') : Ld.kelas(x, u);
+    const pilihFn = (kode) => () => this.setState({ pilih: s.pilih === kode ? null : kode });
+    const peringkat = sek.slice().sort((a, b) => Ld.m(b) - Ld.m(a)).map((x) => x.kode);
+    // kecepatan: porsi = fisika gir (dur sebanding jari-jari, arah selang-seling); lensa lain = |nilai| / batas atas
+    const atas = { tumbuh: 15, sumber: Math.max(0.05, ...sek.map((x) => Math.abs(x.sumb))), spesial: 3, harga: 10 }[Lid];
+    const laju = (q) => {
+      if (Lid === 'porsi') return { dur: 3 + q.r / 9, arah: q.urutan % 2 ? 'reverse' : 'normal' };
+      const m = Ld.m(q.s), t = Math.min(1, Math.abs(m) / atas);
+      return { dur: 18 - 15.5 * t, arah: m < 0 ? 'reverse' : 'normal' };
+    };
+    const basis = s.putar ? 0 : jeda;
+    const gerak = s.putar ? 'lompat' + (s.putar % 2 ? 'B' : 'A') : 'lahir';
+    const obj = roda.slice().sort((a, b) => a.Y - b.Y).map((q) => {
+      const r = q.r, k = Math.min(1, r * 0.95 / 52), ada = r >= 16, lj = laju(q), cls = kelas(q.s);
+      const t = Math.max(3, Math.min(9, r * 0.12));
+      return { pos: 'translate(' + f1(q.x) + ',' + f1(q.Y) + ')', m: f1(-r), d: f1(2 * r),
+        t1: 'translate(0,' + f1(t / 2) + ') scale(1,0.66)', t2: 'translate(0,' + f1(t) + ') scale(1,0.66)',
+        sisi: 'sisi ' + cls, muka: 'muka ' + cls, putar: '--dur: ' + lj.dur.toFixed(2) + 's; --arah: ' + lj.arah,
+        ik: '#ik-' + q.s.ikon, ikCls: (ada ? '' : 'tiada ') + cls, ix: f1(-26 * k), iy: f1(-79 * k), iw: f1(52 * k), ih: f1(90 * k),
+        // percikan kecil dari roda yang berputar paling cepat (lensa selain porsi) - "mesin sedang panas"
+        pcls: Lid !== 'porsi' && lj.dur < 6 ? 'percik' : 'tiada', px: f1(r * 0.7), py: f1(-r * 0.2),
+        gerak, gaya: '--d: ' + (basis + peringkat.indexOf(q.s.kode) * 90) + 'ms',
+        wrap: s.pilih && q.s.kode !== s.pilih ? 'obj redup' : 'obj', pick: pilihFn(q.s.kode) };
+    });
+    const vals = sek.map(Ld.m), ref = Ld.ref || 0;
+    let lo = Math.min(ref, ...vals), hi = Math.max(ref, ...vals);
+    if (Ld.skala) { lo = Ld.skala[0]; hi = Ld.skala[1]; }
+    const ref2 = Lid === 'harga' ? u.prov.infl : ref, asal = Lid === 'harga' ? 0 : ref;
+    lo = Math.min(lo, ref2, asal); hi = Math.max(hi, ref2);
+    const neg = Lid === 'tumbuh' || Lid === 'sumber' || Lid === 'harga';
+    const pos = (v) => (Math.min(hi, Math.max(lo, v)) - lo) / (hi - lo) * 100;
+    const daftar = sek.slice().sort((a, b) => Ld.m(b) - Ld.m(a)).map((x) => {
+      const m = Ld.m(x), a = pos(Math.min(m, asal)), b = pos(Math.max(m, asal));
+      return { ik: '#ik-' + x.ikon, warna: kelas(x), nama: x.nama, teks: Ld.teks(x), vcls: neg && m < 0 ? 'turun' : '',
+        bl: a.toFixed(1) + '%', bw: Math.max(0.8, b - a).toFixed(1) + '%', bcls: neg && m < 0 ? 'neg' : '',
+        cls: x.kode === eff ? 'brs on' : 'brs', pick: pilihFn(x.kode) };
+    });
+    const nKecil = roda.filter((q) => q.kecil).length;
+    const catatan = {
+      porsi: 'Total PDRB ' + rp(u.prov.t25) + ' (harga konstan 2010).' + (nKecil ? ' ' + nKecil + ' roda terkecil dibesarkan ke ukuran minimum agar terlihat.' : ''),
+      tumbuh: 'Batang dipotong pada −10% dan +15%; roda tercepat ≥ 15%. Provinsi ' + sgn(u.prov.g) + ', nasional ' + sgn(u.prov.nasG) + '.',
+      sumber: 'Jumlah semua sumbangan = ' + sgn(u.prov.g) + ' (laju provinsi).',
+      spesial: 'Garis tegak = LQ 1 (sama dengan nasional). Pembanding: nilai tambah 17 sektor PDB nasional.',
+      harga: 'Garis tegak = rata-rata seluruh ekonomi provinsi ' + sgn(u.prov.infl) + '. Roda tercepat ≥ 10%.',
+    }[Lid];
+    const L = { jelas: Ld.jelas, kolom: Ld.kolom, catatan, refPos: pos(ref2).toFixed(1) + '%',
+      legenda: Ld.legenda(u).map(([warna, label]) => ({ warna, label })) };
+    const se = sek.find((x) => x.kode === eff), qe = roda.find((q) => q.s.kode === eff);
+    const n100 = Math.round(se.porsi);
+    const mini = [
+      ['porsi', 'Nilai · porsi', nf1.format(se.v / 1000) + ' T · ' + pct(se.porsi), ''],
+      ['tumbuh', 'Tumbuh riil', sgn(se.g), se.g < 0 ? 'turun' : ''],
+      ['sumber', 'Sumbangan', pp(se.sumb), se.sumb < 0 ? 'turun' : ''],
+      ['spesial', 'LQ vs nasional', nf2.format(se.lq), ''],
+      ['harga', 'Kenaikan harga', sgn(se.infl), se.infl < 0 ? 'turun' : ''],
+      ['', 'Nilai harga berlaku', rp(se.vb), ''],
+    ].map(([id, label, nilai, vcls]) => ({ label, nilai, vcls, cls: id === Lid ? 'mini aktif' : 'mini' }));
+    if (dariPeta) alur.dari = matriks(pl.af, dariPeta);
+    const lq = laju(qe);
+    const kedua = Lid === 'porsi' ? 'roda ' + (n100 < 1 ? '< 1' : n100) + '% luas mesin' : (lq.arah === 'reverse' ? 'berputar mundur' : '1 putaran / ' + nf1.format(lq.dur) + ' detik');
+    const tinggiAtas = qe.r >= 16 ? 79 * Math.min(1, qe.r * 0.95 / 52) : qe.r * 0.66;
+    const c = { bd: (jeda + 17 * 90) + 'ms', nama: se.nama, utama: Ld.teks(se), kedua, mini,
+      x: f1(Math.min(850, Math.max(180, qe.x))), y: f1(Math.max(250, qe.Y - tinggiAtas - 12)) };
+    const rank = d.provinsi.filter((q) => q.pdrb[KEY] > u.prov.t25).length + 1;
+    return { ...alur, siap: true, memuat: false, lensa, L, obj, daftar, c, pulau: { atas: pl.atas, kiri: pl.kiri, kanan: pl.kanan }, bayang: pl.bayang,
+      h: { nama: p.nama, fs: p.nama.length > 14 ? 34 : 46, nilai: rp(u.prov.t25), peringkat: '#' + rank + ' dari 38', tumbuh: (u.prov.g >= 0 ? '▲ ' : '▼ ') + pct(Math.abs(u.prov.g)),
+        gcls: u.prov.g < 0 ? 'turun' : '', nasional: sgn(u.prov.nasG) } };
+  }
+}
+</script>
+</body>
+</html>

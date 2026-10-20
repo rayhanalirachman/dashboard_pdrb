@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>PDRB Indonesia — Beranda 7c dengan pertumbuhan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+.akar{--bg:#FCFCFB;--kartu:#F4F3F1;--ink:#1F1F1F;--redam:#5A5A5A;--aksen:#C2441F;--aksen-hover:#A53A1A;--tint:#FBE9E2;
+--t0:#E9E9E8;--t1:#D4D4D3;--t2:#B5B5B4;--t3:#888887;--t4:#4B4B4A;
+--k0:#D6D6D5;--k1:#C3C3C2;--k2:#A7A7A6;--k3:#7D7D7C;--k4:#454544;
+--n0:#C1C1C1;--n1:#B0B0AF;--n2:#969695;--n3:#717170;--n4:#3E3E3D}
+.akar *{box-sizing:border-box}
+.akar h1,.akar h2,.akar p{margin:0}
+.kartu{background:var(--kartu);border-radius:24px}
+.pill{display:inline-flex;align-items:center;background:var(--tint);border-radius:999px;padding:5px 14px;font:800 13px 'Nunito',sans-serif;color:var(--ink)}
+.kecil{font:700 12.5px 'Nunito',sans-serif;color:var(--redam)}
+.prov{cursor:pointer;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.prov:hover{transform:translateY(-7px)}
+.prov.on{animation:mengapung 3s ease-in-out infinite}
+@keyframes mengapung{0%,100%{transform:translateY(-9px)}50%{transform:translateY(-15px)}}
+.atas{stroke:var(--bg);stroke-width:.9;stroke-linejoin:round}
+.a0{fill:var(--t0)}.a1{fill:var(--t1)}.a2{fill:var(--t2)}.a3{fill:var(--t3)}.a4{fill:var(--t4)}
+.k0{fill:var(--k0)}.k1{fill:var(--k1)}.k2{fill:var(--k2)}.k3{fill:var(--k3)}.k4{fill:var(--k4)}
+.n0{fill:var(--n0)}.n1{fill:var(--n1)}.n2{fill:var(--n2)}.n3{fill:var(--n3)}.n4{fill:var(--n4)}
+.prov.on path{fill:var(--aksen)}
+.prov.on .atas{fill:#E4572E;stroke:#FFFFFF;stroke-width:1.4}
+.masuk{animation:muncul .7s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes muncul{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.nomor{position:absolute;transform:translate(-50%,-100%);width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font:800 12.5px/24px 'Nunito',sans-serif;text-align:center;pointer-events:none}
+.sembunyi{display:none}
+.pin{position:absolute;transform:translate(-50%,-100%);pointer-events:none;background:var(--aksen);color:#fff;border-radius:999px;padding:5px 13px;font:800 13.5px 'Nunito',sans-serif;white-space:nowrap;animation:angguk 3s ease-in-out infinite}
+@keyframes angguk{0%,100%{margin-top:0}50%{margin-top:-6px}}
+.baris{display:grid;grid-template-columns:28px 1fr auto 66px;align-items:center;column-gap:10px;row-gap:4px;width:100%;min-height:42px;background:none;border:0;border-radius:14px;padding:5px 8px;font:700 15px 'Nunito',sans-serif;color:var(--ink);text-align:left;cursor:pointer}
+.baris:hover{background:#ECEBE8}
+.baris.on{background:var(--tint)}
+.bulat{width:26px;height:26px;border-radius:50%;background:#FFFFFF;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;grid-row:span 2}
+.baris.on .bulat{background:var(--aksen);color:#fff}
+.batang{grid-column:2 / 4;height:5px;border-radius:5px;background:#E6E5E2;overflow:hidden}
+.batang i{display:block;height:100%;border-radius:5px;background:var(--t3)}
+.baris.on .batang i{background:var(--aksen)}
+.tumbuh{grid-row:span 2;justify-self:end;font:900 12.5px 'Nunito',sans-serif;background:#FFFFFF;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.turun{color:var(--aksen)}
+.skala{position:relative;height:8px;border-radius:8px;background:#E6E5E2;margin:14px 0 6px}
+.skala .nol,.skala .nas{position:absolute;top:-5px;width:2px;height:18px;background:#888887}
+.skala .nas{background:var(--ink)}
+.skala .titik{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;border:3px solid #FFFFFF;transform:translate(-50%,-50%);box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.tombol{width:100%;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:999px;background:var(--ink);color:#fff;font:800 15.5px 'Nunito',sans-serif;text-decoration:none}
+.tombol:hover{background:var(--aksen)}
+@media (prefers-reduced-motion: reduce){.akar *{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="akar" style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #FCFCFB; font-family: 'Nunito', sans-serif; color: #1F1F1F">
+<svg width="1440" height="900" viewBox="0 0 1440 900" style="position: absolute; left: 0; top: 0" role="img" aria-label="Peta isometrik 38 provinsi Indonesia, tinggi sebanding PDRB harga konstan 2025">
+<sc-for list="{{provs}}" as="p" hint-placeholder-count="38">
+<g class="masuk" style="animation-delay: {{p.delay}}">
+<g class="{{p.cls}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onClick="{{p.pick}}">
+<path class="{{p.kk}}" d="{{p.kiri}}"></path>
+<path class="{{p.kn}}" d="{{p.kanan}}"></path>
+<path class="{{p.ka}}" d="{{p.atas}}"></path>
+</g>
+</g>
+</sc-for>
+</svg>
+
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<div class="{{t.nc}}" style="left: {{t.bx}}px; top: {{t.by}}px">{{t.no}}</div>
+</sc-for>
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="pin" style="left: {{k.px}}px; top: {{k.py}}px">{{k.nama}} · {{k.tumbuh}}</div>
+</sc-if>
+
+<div style="position: absolute; left: 40px; top: 34px; width: 640px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<span class="pill">PDRB 2025 · angka sangat sementara</span>
+<h1 style="font-size: 50px; font-weight: 900; line-height: 1.02; letter-spacing: -.015em">Indonesia, ditumpuk<br>menurut PDRB</h1>
+<sc-if value="{{mandiri}}" hint-placeholder-val="{{ true }}">
+<p style="font-size: 16px; font-weight: 600; color: #474747; max-width: 520px">Makin tinggi pulaunya, makin besar ekonominya. Arahkan kursor ke provinsi untuk melihat besar dan lajunya.</p>
+</sc-if>
+<sc-if value="{{diAlur}}" hint-placeholder-val="{{ false }}">
+<p style="font-size: 16px; font-weight: 600; color: #474747; max-width: 520px">Makin tinggi pulaunya, makin besar ekonominya. Arahkan kursor untuk melihat besar dan lajunya, klik untuk masuk ke dioramanya.</p>
+</sc-if>
+</div>
+
+<div class="kartu" style="position: absolute; right: 40px; top: 36px; padding: 12px 18px; display: flex; gap: 22px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="kecil">Tahun · harga</span>
+<span style="font-size: 16px; font-weight: 800">2025 · harga konstan 2010</span>
+</div>
+<div style="width: 1px; align-self: stretch; background: #E2E1DE"></div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="kecil">Pertumbuhan riil nasional (PDB)</span>
+<span style="font-size: 16px; font-weight: 900">{{nasional}} <span class="kecil" style="font-size: 12px">vs 2024</span></span>
+</div>
+</div>
+
+<sc-if value="{{memuat}}" hint-placeholder-val="{{ false }}">
+<p class="kecil" style="position: absolute; left: 640px; top: 440px">Memuat data…</p>
+</sc-if>
+
+<sc-if value="{{siap}}" hint-placeholder-val="{{ true }}">
+<div class="kartu" style="position: absolute; left: 40px; bottom: 40px; width: 470px; padding: 16px 12px 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 8px 6px">
+<h2 style="font-size: 20px; font-weight: 900">Top 5 provinsi</h2>
+<span class="kecil">PDRB · tumbuh riil</span>
+</div>
+<sc-for list="{{top5}}" as="t" hint-placeholder-count="5">
+<button class="{{t.cls}}" onClick="{{t.pick}}">
+<span class="bulat">{{t.no}}</span>
+<span>{{t.nama}}</span>
+<span style="font-weight: 900; font-size: 14px">{{t.nilai}}</span>
+<span class="{{t.gcls}}">{{t.tumbuh}}</span>
+<span class="batang"><i style="width: {{t.lebar}}"></i></span>
+</button>
+</sc-for>
+</div>
+
+<div class="kartu" style="position: absolute; right: 40px; bottom: 40px; width: 400px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div>
+<span class="kecil">Provinsi terpilih</span>
+<h2 style="font-size: 30px; font-weight: 900; line-height: 1.05; margin-top: 4px">{{k.nama}}</h2>
+<p style="font-size: 15px; font-weight: 700; color: #474747; margin-top: 2px"><b style="font-size: 26px; font-weight: 900; color: #C2441F">{{k.nilai}}</b> · #{{k.peringkat}} dari 38 · porsi {{k.porsi}}</p>
+</div>
+<div style="background: #FFFFFF; border-radius: 16px; padding: 12px 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span class="kecil">Pertumbuhan riil 2024→2025</span>
+<b class="{{k.gcls}}" style="font-size: 26px; font-weight: 900">{{k.tumbuh}}</b>
+</div>
+<div class="skala"><span class="nol" style="left: 33.3%"></span><span class="nas" style="left: {{nasPos}}"></span><span class="titik" style="left: {{k.gpos}}; background: {{k.gwarna}}"></span></div>
+<div class="kecil" style="position: relative; height: 16px; font-size: 11.5px"><span style="position: absolute; left: 0">−5%</span><span style="position: absolute; left: 33.3%; transform: translateX(-50%)">0</span><span style="position: absolute; left: {{nasPos}}; transform: translateX(-50%); color: #1F1F1F">nasional {{nasional}}</span><span style="position: absolute; right: 0">+10%</span></div>
+<p style="font-size: 13px; font-weight: 700; color: #474747; margin-top: 6px">{{k.gteks}}</p>
+</div>
+<p style="font-size: 14px; font-weight: 600; color: #474747">Sektor terbesar: <b style="color: #1F1F1F; font-weight: 800">{{k.sektor}}</b> ({{k.sektorPorsi}})</p>
+<sc-if value="{{mandiri}}" hint-placeholder-val="{{ true }}">
+<a class="tombol" href="DioramaAdegan.dc.html">Masuk ke diorama provinsi
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</sc-if>
+<sc-if value="{{diAlur}}" hint-placeholder-val="{{ false }}">
+<button class="tombol" onClick="{{masuk}}">Masuk ke diorama {{k.nama}}
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</sc-if>
+</div>
+</sc-if>
+
+<p style="position: absolute; left: 530px; bottom: 44px; width: 440px; font-size: 12px; font-weight: 600; line-height: 1.5; color: #5A5A5A; text-align: center">Sumber: BPS, PDRB provinsi dan PDB nasional, harga konstan 2010. Pertumbuhan riil = 2025 dibanding 2024 (angka sementara dan sangat sementara). Tinggi pulau sebanding PDRB.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"onMasuk":{"editor":null},"tinggi":{"editor":"range","default":115,"min":50,"max":180,"step":5,"unit":"px","section":"Peta"},"$preview":{"width":1440,"height":900}}'>
+const DATA_URL = '/_blob/115769bd5b4530b17639f2c0a6b3431f'; // data.json dengan blok "nasional" (PDB BPS var 65)
+const KEY = '2025_konstan', LALU = '2024_konstan';
+const CAM = { a: -6, sq: 0.8, s: 1.2, ox: 96, oy: 330, base: 4 };
+const SKALA = [-5, 10]; // rentang skala pertumbuhan di kartu; di luar ini ditandai "di luar skala"
+const nf1 = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const rp = (v) => 'Rp ' + nf1.format(v / 1000) + ' T';
+const pct = (v) => nf1.format(v) + '%';
+const sgn = (g) => (g >= 0 ? '+' : '−') + pct(Math.abs(g));
+const f1 = (v) => v.toFixed(1);
+const posisi = (g) => ((Math.min(SKALA[1], Math.max(SKALA[0], g)) - SKALA[0]) / (SKALA[1] - SKALA[0]) * 100).toFixed(1) + '%';
+
+function bangun(d, hmax) {
+  const rad = CAM.a * Math.PI / 180, ca = Math.cos(rad), sa = Math.sin(rad);
+  const P = (x, y) => [CAM.ox + CAM.s * (x * ca - y * sa), CAM.oy + CAM.s * CAM.sq * (x * sa + y * ca)];
+  const vmax = Math.max(...d.provinsi.map((p) => p.pdrb[KEY]));
+  const urut = d.provinsi.slice().sort((a, b) => b.pdrb[KEY] - a.pdrb[KEY]).map((p) => p.nama);
+  const gr = (p) => (p.pdrb[KEY] / p.pdrb[LALU] - 1) * 100;
+  const urutG = d.provinsi.slice().sort((a, b) => gr(b) - gr(a)).map((p) => p.nama);
+  const geo = d.provinsi.map((p) => {
+    const h = CAM.base + p.pdrb[KEY] / vmax * hmax;
+    const rank = urut.indexOf(p.nama);
+    const kl = 4 - Math.floor(rank * 5 / urut.length);
+    let atas = '', kiri = '', kanan = '';
+    p.rings.forEach((rs) => {
+      const r = rs.split(' ').map((t) => { const q = t.split(','); return P(+q[0], +q[1]); });
+      let A = 0;
+      r.forEach((q, i) => { const o = r[(i + 1) % r.length]; A += q[0] * o[1] - o[0] * q[1]; });
+      const sg = A > 0 ? 1 : -1;
+      atas += 'M' + r.map((q) => f1(q[0]) + ',' + f1(q[1] - h)).join('L') + 'Z';
+      r.forEach((q, i) => {
+        const o = r[(i + 1) % r.length], dx = o[0] - q[0], dy = o[1] - q[1];
+        if (-sg * dx <= 0) return; // hanya sisi yang menghadap penonton
+        const quad = 'M' + f1(q[0]) + ',' + f1(q[1]) + 'L' + f1(o[0]) + ',' + f1(o[1]) + 'L' + f1(o[0]) + ',' + f1(o[1] - h) + 'L' + f1(q[0]) + ',' + f1(q[1] - h) + 'Z';
+        if (sg * dy < 0) kiri += quad; else kanan += quad;
+      });
+    });
+    const c = P(p.cx, p.cy);
+    return { p, h, rank, kl, g: gr(p), rankG: urutG.indexOf(p.nama), atas, kiri, kanan, gx: c[0], gy: c[1] };
+  });
+  geo.sort((a, b) => a.gy - b.gy);
+  const pdb = d.nasional.pdb; // PDB nasional BPS, bukan jumlah 38 provinsi
+  const nas = (pdb[KEY] / pdb[LALU] - 1) * 100;
+  return { geo, urut, nas };
+}
+
+// kamera peta untuk provinsi terpilih (puncak ekstrusi + ±12 px melayang), dipakai diorama untuk terbang dari sini
+const kamera = (g) => ({ a: CAM.a, sq: CAM.sq, s: CAM.s, ox: CAM.ox, oy: CAM.oy - g.h - 12 });
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { data: null, hover: null, pilih: 'Jawa Timur' };
+  }
+  componentDidMount() {
+    fetch(DATA_URL).then((r) => r.json()).then((data) => this.setState({ data })).catch(() => {});
+  }
+  renderVals() {
+    const s = this.state, d = s.data, hmax = this.props.tinggi ?? 115, onM = this.props.onMasuk;
+    const alur = { diAlur: !!onM, mandiri: !onM };
+    if (!d) return { ...alur, siap: false, memuat: true, provs: [], top5: [], k: {}, nasional: '', nasPos: '0%' };
+    if (this._h !== hmax) { this._h = hmax; this._g = bangun(d, hmax); }
+    const { geo, urut, nas } = this._g;
+    const tot = d.provinsi.reduce((a, p) => a + p.pdrb[KEY], 0);
+    const provs = geo.map((g, i) => ({
+      atas: g.atas, kiri: g.kiri, kanan: g.kanan,
+      ka: 'atas a' + g.kl, kk: 'k' + g.kl, kn: 'n' + g.kl,
+      cls: g.p.nama === s.pilih ? 'prov on' : 'prov', delay: (i * 35) + 'ms',
+      enter: () => this.setState({ hover: g.p.nama }),
+      leave: () => this.setState({ hover: null }),
+      // di alur final: klik = masuk diorama; titik asal zoom = puncak provinsi itu
+      pick: () => { this.setState({ pilih: g.p.nama }); if (onM) onM(g.p.nama, kamera(g)); },
+    }));
+    const fg = geo.find((g) => g.p.nama === (s.hover || s.pilih));
+    const fp = fg.p, v = fp.pdrb[KEY], g = fg.g;
+    const sek = fp.sektor[KEY], si = sek.indexOf(Math.max(...sek));
+    const lift = fp.nama === s.pilih ? 12 : 0;
+    const luar = g < SKALA[0] || g > SKALA[1];
+    const banding = g < 0 ? 'Ekonominya menyusut riil.' : g >= nas ? 'Lebih cepat dari pertumbuhan nasional.' : 'Lebih lambat dari pertumbuhan nasional.';
+    const k = {
+      nama: fp.nama, nilai: rp(v), peringkat: fg.rank + 1, porsi: pct(v / tot * 100),
+      tumbuh: sgn(g), gcls: g < 0 ? 'turun' : '', gpos: posisi(g), gwarna: g < 0 ? '#C2441F' : '#1F1F1F',
+      gteks: 'Laju #' + (fg.rankG + 1) + ' dari 38. ' + banding + (luar ? ' Nilainya di luar skala −5 sampai +10%.' : ''),
+      sektor: d.sektor[si].nama, sektorPorsi: pct(sek[si] / v * 100),
+      px: f1(fg.gx), py: f1(fg.gy - fg.h - lift - 12),
+    };
+    const vTop = geo.find((x) => x.rank === 0).p.pdrb[KEY];
+    const top5 = urut.slice(0, 5).map((nama, i) => {
+      const x = geo.find((y) => y.p.nama === nama), val = x.p.pdrb[KEY];
+      return { no: i + 1, nama, nilai: rp(val), lebar: (val / vTop * 100).toFixed(1) + '%', cls: nama === s.pilih ? 'baris on' : 'baris',
+        tumbuh: (x.g >= 0 ? '▲ ' : '▼ ') + pct(Math.abs(x.g)), gcls: x.g < 0 ? 'tumbuh turun' : 'tumbuh',
+        nc: nama === fp.nama ? 'sembunyi' : 'nomor', pick: () => this.setState({ pilih: nama }), bx: f1(x.gx), by: f1(x.gy - x.h - 4) };
+    });
+    const sel = geo.find((x) => x.p.nama === s.pilih);
+    alur.masuk = () => onM && onM(sel.p.nama, kamera(sel));
+    return { ...alur, siap: true, memuat: false, provs, top5, k, nasional: sgn(nas), nasPos: posisi(nas) };
+  }
+}
+</script>
+</body>
+</html>
